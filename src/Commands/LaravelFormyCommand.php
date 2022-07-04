@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Visanduma\LaravelFormy\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class LaravelFormyCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-formy';
 
     public $description = 'My command';
 
