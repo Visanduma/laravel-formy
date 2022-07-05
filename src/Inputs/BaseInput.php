@@ -16,8 +16,8 @@ abstract class BaseInput
     private string $view;
     protected bool $invalid = false;
     protected string $errorMessage = "";
-    public bool $showOnUpdate   = true;
-    public bool $showOnCreate   = true;
+    protected bool $showOnUpdate = true;
+    protected bool $showOnCreate = true;
     protected array $rules = [];
 
     public function __construct($label, $name)
@@ -58,7 +58,7 @@ abstract class BaseInput
 
     public function disable()
     {
-        $this->setAttribute('disabled');
+        $this->setAttribute('disabled',true); // TODO: handle disable attribue properly
         return $this;
     }
 
@@ -119,17 +119,11 @@ abstract class BaseInput
 
     public function attributesString():string
     {
-        $str="";
+        if(!$this->attributes) return '';
 
-        foreach ($this->attributes as $key=>$attr){
-            if(!empty($attr)){
-                $str.=  $key."=".$attr." "; // TODO string with spaces not works
-            }else{
-                $str.= $key." ";
-            }
-        }
+        $compiled = join('="%s" ', array_keys($this->attributes)).'="%s"';
 
-        return $str;
+        return vsprintf($compiled, array_map('htmlspecialchars', array_values($this->attributes)));
     }
 
     public function classString():string
@@ -156,5 +150,15 @@ abstract class BaseInput
     {
         $this->showOnUpdate = call_user_func($callback);
         return $this;
+    }
+
+    public function displayOnUpdate():bool
+    {
+        return $this->showOnUpdate;
+    }
+
+    public function displayOnCreate():bool
+    {
+        return $this->showOnCreate;
     }
 }

@@ -4,6 +4,7 @@
 namespace Visanduma\LaravelFormy;
 
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Visanduma\LaravelFormy\Traits\Wrapper;
 
@@ -22,14 +23,23 @@ class Form
     public function __construct()
     {
         $this->setAttribute('method', 'post');
+        $this->config['btn.text']  = $this->createButtonText;
+        $this->inputCollection = $this->inputs();
+
     }
 
-    public static function updateForm($modelKey)
+    public static function updateForm($model)
     {
+        // TODO: improve model detection
         $ins = new static();
-        $ins->modelKey = $modelKey;
-        $ins->updateView();
 
+        if($model instanceof Model){
+            $ins->modelKey = $model->getKey();
+        }else{
+            $ins->modelKey = $model;
+        }
+
+        $ins->updateView();
         return $ins;
     }
 
@@ -44,16 +54,10 @@ class Form
         return [];
     }
 
-    public function bind($data)
-    {
-        $this->data = $data;
-        return $this;
-    }
-
     public function inputsNames()
     {
         $nm = [];
-        foreach ($this->inputs() as $ip) {
+        foreach ($this->inputCollection as $ip) {
             $nm[] = $ip->getAttribute('name');
         }
 
@@ -62,23 +66,32 @@ class Form
 
     public function updateView()
     {
-        $this->bind($this->getModel());
+        $this->bindData($this->getModel());
+        $this->isUpdate = true;
         $this->config['btn.text']  = $this->updateButtonText;
     }
 
-    private function getModel()
+    public function getModel()
     {
-        if (!$this->model::exists($this->modelKey)) {
-            throw new ModelNotFoundException();
+        if(request()->isMethod('post')){
+            $key = request()->get('_model');
+        }else{
+            $key = $this->modelKey;
         }
 
-        return $this->model::find($this->modelKey);
+        if($this->model::exists($key)){
+            return $this->model::find($key);
+        }
+
+        return $this->model;
+
+
     }
 
     public function getValidationRules(): array
     {
         $rr = [];
-        foreach ($this->inputs() as $input) {
+        foreach ($this->inputCollection as $input) {
             $rr[$input->getAttribute('name')] = $input->getRules();
         }
 
@@ -88,10 +101,16 @@ class Form
     public function getValidationAttributeLabels(): array
     {
         $rr = [];
-        foreach ($this->inputs() as $input) {
+        foreach ($this->inputCollection as $input) {
             $rr[$input->getAttribute('name')] = $input->getLabel();
         }
 
         return $rr;
     }
+
+    public function validateInputs()
+    {
+        return request()->validate($this->getValidationRules(),[], $this->getValidationAttributeLabels());
+    }
+
 }

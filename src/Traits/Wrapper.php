@@ -11,6 +11,7 @@ trait Wrapper
     private array $classes = [];
     private $bindingData = [];
     private bool $isUpdate = false;
+    private array $inputCollection = [];
 
 
     private function setAttribute($name, $value)
@@ -63,15 +64,15 @@ trait Wrapper
     public function bindData($data)
     {
         $this->bindingData = $data;
-        $this->isUpdate = true;
         return $this;
     }
 
     private function bindInputs()
     {
+        // TODO: improve this data binding
         if($this->bindingData){
             $this->config['btn.text']  = $this->updateButtonText;
-            foreach ($this->inputs() as $input) {
+            foreach ($this->inputCollection as $input) {
                 $input->value($this->bindingData[$input->getAttribute('name')]);
             }
         }
@@ -96,8 +97,8 @@ trait Wrapper
 
         $html = "";
 
-        foreach ($this->inputs() as $input) {
-            if($this->isUpdate && $input->showOnUpdate){
+        foreach ($this->inputCollection as $input) {
+            if($this->isUpdate && $input->displayOnUpdate()){
                 $html .= $input->html();
             }
             if(!$this->isUpdate){

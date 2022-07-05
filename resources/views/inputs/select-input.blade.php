@@ -1,7 +1,7 @@
 <div class="mb-3">
     <label for="el-{{$input->getAttribute('name')}}" class="form-label">{{ $input->getAttribute('label') }}</label>
     <select
-            {{ $input->attributesString() }}
+        {!! $input->attributesString() !!}
             class="form-select {{ $input->classString() }}"
     >
         @foreach($options as $key=>$op)

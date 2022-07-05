@@ -4,14 +4,14 @@
 namespace Visanduma\LaravelFormy\Inputs;
 
 
-use App\Helpers\Forms\Traits\MultiChoice;
+use Visanduma\LaravelFormy\Traits\MultiChoice;
 
-class RadioButtons extends BaseInput
+class RadioInputs extends BaseInput
 {
     use MultiChoice;
 
 
-    public static function make($label, $name = ""): RadioButtons
+    public static function make($label, $name = ""): RadioInputs
     {
         return new self($label, $name);
     }
@@ -21,7 +21,6 @@ class RadioButtons extends BaseInput
         return view('formy::inputs.radio-input', [
             'input' => $this,
             'disabled' => $this->disabled,
-            'classes' => implode(" ", $this->classes),
             'options' => $this->options
         ])->render();
     }

@@ -4,14 +4,14 @@
     @foreach($options as $key=>$op)
         <div class="form-check">
             <input
-                    {{ $disabled ? 'disabled' : '' }}
-                    class="form-check-input {{ $classes }}"
+                {{ $input->getAttribute('disabled') !== "" ? 'disabled' : '' }}
+                    class="form-check-input {{ $input->classString() }}"
                     type="checkbox"
                     name="{{ $input->getAttribute('name') }}"
-                    id="op-{{ $key }}"
+                    id="formy-{{ $key }}"
                     {{ $input->selectedBy($key) ? "checked" : '' }}
             >
-            <label class="form-check-label" for="op-{{ $key }}">
+            <label class="form-check-label" for="formy-{{ $key }}">
                 {{ $op }}
             </label>
 
