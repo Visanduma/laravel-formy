@@ -12,7 +12,8 @@ class FilePond extends BaseInput
     {
         $ins = new static($label, $name);
         $ins->setAttribute('type','file');
-//        $ins->setAttribute('name',$ins->getAttribute('name')."[]");
+        $ins->removeAttribute('name');
+
         $ins->setOption('server', route('formy.file-upload'));
         $ins->setOption('name','filepond');
 
@@ -46,7 +47,6 @@ class FilePond extends BaseInput
 
     public function multipe()
     {
-//        $this->setAttribute('multiple');
         $this->setOption('allowMultiple',true);
         return $this;
     }

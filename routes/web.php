@@ -27,7 +27,7 @@ Route::any('formy/filepond',function(\Illuminate\Http\Request $request){
 
     if($request->isMethod('post')){
 
-        $file = $request->file('image');
+        $file = $request->file('filepond');
         $dir = strtolower(\Illuminate\Support\Str::random());
         $file->storeAs("$rootDir/$dir/",$file->getClientOriginalName());
 

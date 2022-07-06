@@ -80,6 +80,12 @@ abstract class BaseInput
         return $this;
     }
 
+    protected function removeAttribute($name)
+    {
+        unset($this->attributes[$name]);
+        return $this;
+    }
+
     protected function addClass($value)
     {
         $this->classes[] = $value;
