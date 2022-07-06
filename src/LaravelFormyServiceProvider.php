@@ -19,7 +19,7 @@ class LaravelFormyServiceProvider extends PackageServiceProvider
             ->name('laravel-formy')
             ->hasConfigFile()
             ->hasViews('formy')
-            ->hasMigration('create_laravel-formy_table')
+            ->hasRoute('web')
             ->hasCommand(LaravelFormyCommand::class);
     }
 }

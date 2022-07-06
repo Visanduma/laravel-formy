@@ -96,7 +96,7 @@ class FormWrapper
     {
         $this->bindInputs();
 
-        $this->setAttribute('action', route('tenant.formy.post', [
+        $this->setAttribute('action', route('formy::form-submit', [
             '_form' => encrypt($this->formClass),
             '_hash' => Hash::make($this->formClass),
             '_model' => optional($this->bindingData)->getKey() ?? null

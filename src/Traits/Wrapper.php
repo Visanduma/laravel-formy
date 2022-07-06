@@ -89,7 +89,7 @@ trait Wrapper
         $this->bindInputs();
         $class = get_called_class();
 
-        $this->setAttribute('action', route('tenant.formy.post', [
+        $this->setAttribute('action', route('formy.form-submit', [
             '_form' => encrypt($class),
             '_hash' => Hash::make($class),
             '_model' => optional($this->bindingData)->getKey() ?? null

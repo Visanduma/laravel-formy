@@ -2,7 +2,7 @@
     <label for="{{$input->getAttribute('id')}}" class="form-label">{{ $input->getAttribute('label') }}</label>
 
     <div class="{{ $input->classString() }}"  {!! $input->attributesString() !!}>
-        {{ old($input->getAttribute('name'),$input->getAttribute('value')) }}
+        {!! old($input->getAttribute('name'),$input->getAttribute('value')) !!}
     </div>
     <div class="invalid-feedback">
         {{ $errors->first($input->getAttribute('name')) }}
