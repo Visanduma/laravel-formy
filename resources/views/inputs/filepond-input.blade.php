@@ -13,8 +13,9 @@
 </div>
 
 <script>
-    var options = @json($input->options());
 
-    const el = document.getElementById('{{ $input->getAttribute('id')  }}')
-    const pond = FilePond.create(el,options)
+    FilePond.create(
+        document.getElementById('{{ $input->getAttribute('id')  }}'),
+        @json($input->options())
+    )
 </script>

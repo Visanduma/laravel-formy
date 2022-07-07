@@ -4,18 +4,22 @@
 namespace Visanduma\LaravelFormy\Inputs;
 
 
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Visanduma\LaravelFormy\Controllers\FilePondController;
+
 class FilePond extends BaseInput
 {
     private $options = [];
+    private $uploadedKeys = [];
 
     public static function make($label, $name = ""): FilePond
     {
         $ins = new static($label, $name);
         $ins->setAttribute('type','file');
-        $ins->removeAttribute('name');
-
         $ins->setOption('server', route('formy.file-upload'));
-        $ins->setOption('name','filepond');
 
         return $ins;
     }
@@ -23,7 +27,6 @@ class FilePond extends BaseInput
 
     public function html()
     {
-
         return view('formy::inputs.filepond-input', [
             'input' => $this,
         ])->render();
@@ -45,11 +48,31 @@ class FilePond extends BaseInput
         return $this;
     }
 
-    public function multipe()
+    public function multiple()
     {
         $this->setOption('allowMultiple',true);
+        $this->setOption('name',$this->getAttribute('name')."[]");
+        $this->removeAttribute('name');
+
         return $this;
     }
+
+
+    public static function moveFilesTo($files,$destination)
+    {
+        $output = [];
+        foreach (Arr::wrap($files) as $file){
+            $source = FilePondController::ROOT_DIR."/$file";
+            $destination = Str::finish($destination,"/$file");
+
+            Storage::move($source, $destination);
+
+            $output[] = $destination;
+        }
+
+        return $output;
+    }
+
 
 
 }

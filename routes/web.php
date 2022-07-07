@@ -21,22 +21,4 @@ Route::post('formy/submit', function (\Illuminate\Http\Request $request) {
 
 })->name('formy.form-submit');
 
-Route::any('formy/filepond',function(\Illuminate\Http\Request $request){
-
-    $rootDir =  "formy/temp-uploads";
-
-    if($request->isMethod('post')){
-
-        $file = $request->file('filepond');
-        $dir = strtolower(\Illuminate\Support\Str::random());
-        $file->storeAs("$rootDir/$dir/",$file->getClientOriginalName());
-
-        return $dir;
-    }
-    if($request->isMethod('delete')){
-        $dir = $request->getContent();
-        \Illuminate\Support\Facades\Storage::deleteDirectory("$rootDir/$dir");
-        return "DELETED";
-    }
-
-})->name('formy.file-upload');
+Route::any('formy/filepond',[\Visanduma\LaravelFormy\Controllers\FilePondController::class,'handleUpload'])->name('formy.file-upload');
