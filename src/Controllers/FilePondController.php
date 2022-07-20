@@ -18,9 +18,8 @@ class FilePondController extends Controller
 
         if($request->isMethod('post')){
 
-            $file = Arr::first($request->allFiles());
-            $filename = pathinfo($file->getClientOriginalName(),PATHINFO_FILENAME)."_".time().".".$file->getClientOriginalExtension();
-            $filename = Str::snake($filename);
+            $file = Arr::flatten($request->allFiles())[0];
+            $filename = Str::random()."_".time().".".$file->getClientOriginalExtension();
             $file->storeAs("$rootDir",$filename);
 
             return $filename;

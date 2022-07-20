@@ -20,6 +20,7 @@ class FilePond extends BaseInput
         $ins = new static($label, $name);
         $ins->setAttribute('type','file');
         $ins->setOption('server', route('formy.file-upload'));
+        $ins->setOption('credits',false);
 
         return $ins;
     }
@@ -52,15 +53,17 @@ class FilePond extends BaseInput
     {
         $this->setOption('allowMultiple',true);
         $this->setOption('name',$this->getAttribute('name')."[]");
-        $this->removeAttribute('name');
+//        $this->removeAttribute('name');
 
         return $this;
     }
 
 
-    public static function moveFilesTo($files,$destination)
+    public static function moveFilesTo($inputName,$destination)
     {
+        $files = request()->get($inputName);
         $output = [];
+
         foreach (Arr::wrap($files) as $file){
             $source = FilePondController::ROOT_DIR."/$file";
             $destination = Str::finish($destination,"/$file");
@@ -69,6 +72,10 @@ class FilePond extends BaseInput
 
             $output[] = $destination;
         }
+
+        request()->merge([
+            $inputName => empty($output) ? null : $output
+        ]);
 
         return $output;
     }

@@ -18,6 +18,7 @@ class Form
     private $config;
     protected string $createButtonText = "Create";
     protected string $updateButtonText = "Update";
+    private $validationMessages = [];
 
 
     public function __construct()
@@ -95,7 +96,7 @@ class Form
             $rr[$input->getAttribute('name')] = $input->getRules();
         }
 
-        return $rr;
+        return array_filter($rr);
     }
 
     public function getValidationAttributeLabels(): array
@@ -105,12 +106,25 @@ class Form
             $rr[$input->getAttribute('name')] = $input->getLabel();
         }
 
-        return $rr;
+        return array_filter($rr);
     }
 
-    public function validateInputs()
+    public function validate()
     {
-        return request()->validate($this->getValidationRules(),[], $this->getValidationAttributeLabels());
+        request()->validate($this->getValidationRules(),[],$this->getValidationAttributeLabels());
     }
+
+    public function hasValidInputs()
+    {
+        $vd = validator(request()->all(),$this->getValidationRules(),[],$this->getValidationAttributeLabels());
+        $this->validationMessages = $vd->errors()->messages();
+        return !$vd->fails();
+    }
+
+    public function getValidationMessages()
+    {
+        return $this->validationMessages;
+    }
+
 
 }

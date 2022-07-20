@@ -4,11 +4,9 @@
             class="{{ $input->classString() }} "
             {!! $input->attributesString() !!}
     >
-    <div class="invalid-feedback">
-        {{ $errors->first($input->getAttribute('name')) }}
-        {{ $input->getErrorMessage() }}
-    </div>
 
+
+    <div class="text-danger form-text">{{ $errors->first($input->getAttribute('name')) }}</div>
     <p class="form-text">{{ $input->getAttribute('helpText')  }}</p>
 </div>
 

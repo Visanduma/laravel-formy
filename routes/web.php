@@ -19,6 +19,6 @@ Route::post('formy/submit', function (\Illuminate\Http\Request $request) {
     }
     return $bb->store($request);
 
-})->name('formy.form-submit');
+})->middleware('web')->name('formy.form-submit');
 
 Route::any('formy/filepond',[\Visanduma\LaravelFormy\Controllers\FilePondController::class,'handleUpload'])->name('formy.file-upload');
