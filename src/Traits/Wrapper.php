@@ -97,14 +97,30 @@ trait Wrapper
 
         $html = "";
 
+        $totalCols = 0;
         foreach ($this->inputCollection as $input) {
-            if($this->isUpdate && $input->displayOnUpdate()){
-                $html .= $input->html();
-            }
-            if(!$this->isUpdate){
-                $html .= $input->html();
+
+            $col = $input->getLayoutColumn();
+            $row_prefix = "";
+            $row_suffix = "";
+
+            // row managment
+            if($totalCols == 0){
+                $row_prefix = "<div class='row'>";
             }
 
+            $totalCols += $col;
+
+            if($totalCols == 12 || $input->onSingleLine()){
+                $row_suffix = "</div>";
+                $totalCols = 0;
+            }
+
+
+            if($this->isUpdate && $input->displayOnUpdate() ||  !$this->isUpdate){
+                $html .= $row_prefix."<div class='col-$col'>".$input->html()."</div>".$row_suffix;
+            }
+            
         }
 
         return view('formy::form')

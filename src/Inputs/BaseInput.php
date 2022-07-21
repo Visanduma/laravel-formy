@@ -19,6 +19,8 @@ abstract class BaseInput
     protected bool $showOnUpdate = true;
     protected bool $showOnCreate = true;
     protected array $rules = [];
+    private $col = 12;
+    private $singleLine = false;
 
     public function __construct($label, $name)
     {
@@ -166,5 +168,27 @@ abstract class BaseInput
     public function displayOnCreate():bool
     {
         return $this->showOnCreate;
+    }
+
+    public function width($number)
+    {
+        $this->col = $number;
+        return $this;
+    }
+
+    public function getLayoutColumn()
+    {
+        return $this->col;
+    }
+
+    public function singleLine($value=true)
+    {
+        $this->singleLine = $value;
+        return $this;
+    }
+
+    public function onSingleLine()
+    {
+        return $this->singleLine;
     }
 }
