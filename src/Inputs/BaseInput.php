@@ -21,12 +21,18 @@ abstract class BaseInput
     protected array $rules = [];
     private $col = 12;
     private $singleLine = false;
+    private $inline = false;
+    private $parentClass = [];
+    private $labelClass = [];
+    private $wrapperClass = [];
 
     public function __construct($label, $name)
     {
 
         $this->setAttribute('name', $name ?: Str::snake($label));
         $this->setAttribute('label', ucfirst($label));
+        $this->addWrapperClass('mb-3');
+        $this->addLabelClass('form-label');
         $this->id();
     }
 
@@ -91,6 +97,21 @@ abstract class BaseInput
     protected function addClass($value)
     {
         $this->classes[] = $value;
+    }
+
+    protected function addWrapperClass($value)
+    {
+        $this->wrapperClass[] = $value;
+    }
+
+    protected function addParentClass($value)
+    {
+        $this->parentClass[] = $value;
+    }
+
+    protected function addLabelClass($value)
+    {
+        $this->labelClass[] = $value;
     }
 
     protected function removeClass($value)
@@ -173,6 +194,7 @@ abstract class BaseInput
     public function width($number)
     {
         $this->col = $number;
+        $this->addWrapperClass("col-$number");
         return $this;
     }
 
@@ -190,5 +212,35 @@ abstract class BaseInput
     public function onSingleLine()
     {
         return $this->singleLine;
+    }
+
+    public function inline()
+    {
+        $this->addWrapperClass('row');
+        $this->addLabelClass('col-sm-2');
+        $this->addLabelClass('col-form-label');
+        $this->addParentClass('col-sm-10');
+        $this->inline = true;
+        return $this;
+    }
+
+    public function isInline()
+    {
+        return $this->inline;
+    }
+
+    public function getWrapperClass()
+    {
+        return implode(" ",$this->wrapperClass);
+    }
+
+    public function getLabelClass()
+    {
+        return implode(" ",$this->labelClass);
+    }
+
+    public function getParentClass()
+    {
+        return implode(" ",$this->parentClass);
     }
 }

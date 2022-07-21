@@ -98,7 +98,7 @@ trait Wrapper
         $html = "";
 
         $totalCols = 0;
-        foreach ($this->inputCollection as $input) {
+        foreach ($this->inputCollection as $key=>$input) {
 
             $col = $input->getLayoutColumn();
             $row_prefix = "";
@@ -111,16 +111,16 @@ trait Wrapper
 
             $totalCols += $col;
 
-            if($totalCols == 12 || $input->onSingleLine()){
+            if($totalCols == 12 || $input->onSingleLine() || $key + 1 == count($this->inputCollection)){
                 $row_suffix = "</div>";
                 $totalCols = 0;
             }
 
 
             if($this->isUpdate && $input->displayOnUpdate() ||  !$this->isUpdate){
-                $html .= $row_prefix."<div class='col-$col'>".$input->html()."</div>".$row_suffix;
+                $html .= $row_prefix.$input->html().$row_suffix;
             }
-            
+
         }
 
         return view('formy::form')
