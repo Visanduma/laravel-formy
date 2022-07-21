@@ -193,8 +193,14 @@ abstract class BaseInput
 
     public function width($number)
     {
-        $this->col = $number;
-        $this->addWrapperClass("col-$number");
+        if(!$this->inline){
+            $this->col = $number;
+            $this->addWrapperClass("col-$number");
+        }else{
+            unset($this->parentClass[array_search('col-10',$this->parentClass)]);
+            $this->addParentClass("col-$number");
+        }
+
         return $this;
     }
 
@@ -217,9 +223,9 @@ abstract class BaseInput
     public function inline()
     {
         $this->addWrapperClass('row');
-        $this->addLabelClass('col-sm-2');
+        $this->addLabelClass('col-2');
         $this->addLabelClass('col-form-label');
-        $this->addParentClass('col-sm-10');
+        $this->addParentClass('col-10');
         $this->inline = true;
         return $this;
     }
@@ -242,5 +248,10 @@ abstract class BaseInput
     public function getParentClass()
     {
         return implode(" ",$this->parentClass);
+    }
+
+    protected function removeValueFrom($value,$array)
+    {
+        unset($array[array_search($value,$array)]);
     }
 }
