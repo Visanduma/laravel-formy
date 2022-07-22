@@ -16,12 +16,11 @@ class Select extends BaseInput
     }
 
 
-    public function html()
+    public function html($theme)
     {
-        return view('formy::inputs.select-input', [
-            'input' => $this,
+        return $this->inputView('select-input', $theme, [
             'options' => $this->options
-        ])->render();
+        ]);
     }
 
 

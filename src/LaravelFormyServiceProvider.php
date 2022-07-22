@@ -21,5 +21,9 @@ class LaravelFormyServiceProvider extends PackageServiceProvider
             ->hasViews('formy')
             ->hasRoute('web')
             ->hasCommand(LaravelFormyCommand::class);
+
+        $this->publishes([
+            __DIR__.'/../resources/views/themes' => resource_path('views/vendor/formy/themes')
+        ], 'views');
     }
 }

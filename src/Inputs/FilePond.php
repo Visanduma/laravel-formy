@@ -26,11 +26,9 @@ class FilePond extends BaseInput
     }
 
 
-    public function html()
+    public function html($theme)
     {
-        return view('formy::inputs.filepond-input', [
-            'input' => $this,
-        ])->render();
+        return $this->inputView('filepond-input',$theme);
     }
 
     public function options()

@@ -13,13 +13,11 @@ class RangeInput extends BaseInput
     }
 
 
-    public function html()
+    public function html($theme)
     {
         $this->setAttribute('type','range');
 
-        return view('formy::inputs.text-input', [
-            'input' => $this,
-        ])->render();
+        return $this->inputView('text-input', $theme);
     }
 
 

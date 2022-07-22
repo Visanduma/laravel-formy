@@ -13,13 +13,11 @@ class FileInput extends BaseInput
     }
 
 
-    public function html()
+    public function html($theme)
     {
         $this->setAttribute('type','file');
 
-        return view('formy::inputs.text-input', [
-            'input' => $this,
-        ])->render();
+        return $this->inputView('text-input',$theme);
     }
 
 

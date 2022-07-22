@@ -13,14 +13,12 @@ class ColorInput extends BaseInput
     }
 
 
-    public function html()
+    public function html($theme)
     {
         $this->setAttribute('type','color');
         $this->addClass('w-25');
 
-        return view('formy::inputs.text-input', [
-            'input' => $this,
-        ])->render();
+        return $this->inputView('text-input', $theme);
     }
 
 

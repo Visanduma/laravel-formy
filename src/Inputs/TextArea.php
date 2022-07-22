@@ -25,13 +25,11 @@ class TextArea extends BaseInput
     }
 
 
-    public function html()
+    public function html($theme)
     {
-        return view('formy::inputs.textarea-input', [
-            'input' => $this,
-            'disabled' => $this->disabled,
-            'classes' => implode(" ", $this->classes)
-        ])->render();
+        return $this->inputView('textarea-input', $theme,[
+            'disabled' => $this->disabled
+        ]);
     }
 
 

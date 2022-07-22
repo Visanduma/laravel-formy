@@ -17,14 +17,12 @@ class QuillEditor extends BaseInput
     }
 
 
-    public function html()
+    public function html($theme)
     {
         $this->setAttribute('id','formy-quill-editor');
         $this->setOption('theme','snow');
 
-        return view('formy::inputs.quill-editor-input', [
-            'input' => $this,
-        ])->render();
+        return $this->inputView('quill-editor-input',$theme);
     }
 
     public function options()

@@ -16,13 +16,12 @@ class RadioInputs extends BaseInput
         return new self($label, $name);
     }
 
-    public function html()
+    public function html($theme)
     {
-        return view('formy::inputs.radio-input', [
-            'input' => $this,
+        return $this->inputView('radio-input', $theme, [
             'disabled' => $this->disabled,
             'options' => $this->options
-        ])->render();
+        ]);
     }
 
 

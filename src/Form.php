@@ -19,6 +19,7 @@ class Form
     protected string $createButtonText = "Create";
     protected string $updateButtonText = "Update";
     private $validationMessages = [];
+    protected $theme = "bootstrap5";
 
 
     public function __construct()

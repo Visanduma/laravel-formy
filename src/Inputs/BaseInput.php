@@ -4,6 +4,7 @@
 namespace Visanduma\LaravelFormy\Inputs;
 
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 abstract class BaseInput
@@ -13,12 +14,12 @@ abstract class BaseInput
     protected array $attributes = [];
     protected array $classes = [];
     protected bool $disabled = false;
-    private string $view;
     protected bool $invalid = false;
     protected string $errorMessage = "";
     protected bool $showOnUpdate = true;
     protected bool $showOnCreate = true;
     protected array $rules = [];
+    private string $view;
     private $col = 12;
     private $singleLine = false;
     private $inline = false;
@@ -31,9 +32,31 @@ abstract class BaseInput
 
         $this->setAttribute('name', $name ?: Str::snake($label));
         $this->setAttribute('label', ucfirst($label));
-        $this->addWrapperClass('mb-3');
+//        $this->addWrapperClass('mb-3');
         $this->addLabelClass('form-label');
         $this->id();
+    }
+
+    protected function setAttribute($name, $value = "")
+    {
+        $this->attributes[$name] = $value;
+        return $this;
+    }
+
+    protected function addLabelClass($value)
+    {
+        $this->labelClass[] = $value;
+    }
+
+    public function id()
+    {
+        $this->setAttribute('id',"formy-".$this->getAttribute('name'));
+        return $this;
+    }
+
+    public function getAttribute($name, $default = "")
+    {
+        return $this->attributes[$name] ?? $default;
     }
 
     public function name($name)
@@ -46,15 +69,10 @@ abstract class BaseInput
     {
         return $this->getAttribute('label');
     }
+
     public function placeholder($value)
     {
         $this->setAttribute('placeholder', $value);
-        return $this;
-    }
-
-    public function id()
-    {
-        $this->setAttribute('id',"formy-".$this->getAttribute('name'));
         return $this;
     }
 
@@ -82,56 +100,9 @@ abstract class BaseInput
         return $this;
     }
 
-    protected function setAttribute($name, $value = "")
-    {
-        $this->attributes[$name] = $value;
-        return $this;
-    }
-
-    protected function removeAttribute($name)
-    {
-        unset($this->attributes[$name]);
-        return $this;
-    }
-
-    protected function addClass($value)
-    {
-        $this->classes[] = $value;
-    }
-
-    protected function addWrapperClass($value)
-    {
-        $this->wrapperClass[] = $value;
-    }
-
-    protected function addParentClass($value)
-    {
-        $this->parentClass[] = $value;
-    }
-
-    protected function addLabelClass($value)
-    {
-        $this->labelClass[] = $value;
-    }
-
-    protected function removeClass($value)
-    {
-        unset($this->classes[$value]);
-    }
-
-    protected function view($name)
-    {
-        $this->view = $name;
-    }
-
     public function hasAttribute($name): bool
     {
         return array_key_exists($name, $this->attributes);
-    }
-
-    public function getAttribute($name, $default = "")
-    {
-        return $this->attributes[$name] ?? $default;
     }
 
     public function getErrorMessage()
@@ -144,6 +115,11 @@ abstract class BaseInput
         $this->addClass('is-invalid');
         $this->errorMessage = $message;
         return $this;
+    }
+
+    protected function addClass($value)
+    {
+        $this->classes[] = $value;
     }
 
     public function attributesString():string
@@ -204,6 +180,16 @@ abstract class BaseInput
         return $this;
     }
 
+    protected function addWrapperClass($value)
+    {
+        $this->wrapperClass[] = $value;
+    }
+
+    protected function addParentClass($value)
+    {
+        $this->parentClass[] = $value;
+    }
+
     public function getLayoutColumn()
     {
         return $this->col;
@@ -250,8 +236,30 @@ abstract class BaseInput
         return implode(" ",$this->parentClass);
     }
 
+    protected function removeAttribute($name)
+    {
+        unset($this->attributes[$name]);
+        return $this;
+    }
+
+    protected function removeClass($value)
+    {
+        unset($this->classes[$value]);
+    }
+
+    protected function view($name)
+    {
+        $this->view = $name;
+    }
+
     protected function removeValueFrom($value,$array)
     {
         unset($array[array_search($value,$array)]);
+    }
+
+    protected function inputView($view,$theme,$data = [])
+    {
+        $data = array_merge($data,['input' => $this]);
+        return view("formy::themes.$theme.$view", $data)->render();
     }
 }

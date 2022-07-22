@@ -118,7 +118,7 @@ trait Wrapper
 
 
             if($this->isUpdate && $input->displayOnUpdate() ||  !$this->isUpdate){
-                $html .= $row_prefix.$input->html().$row_suffix;
+                $html .= $row_prefix.$input->html($this->theme).$row_suffix;
             }
 
         }

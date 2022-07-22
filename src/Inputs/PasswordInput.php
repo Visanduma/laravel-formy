@@ -11,11 +11,10 @@ class PasswordInput extends BaseInput
         return new self($label, $name);
     }
 
-    public function html()
+    public function html($theme)
     {
         $this->setAttribute('type','password');
-        return view('formy::inputs.text-input', [
-            'input' => $this,
-        ])->render();
+
+        return $this->inputView('text-input',$theme);
     }
 }

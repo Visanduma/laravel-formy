@@ -15,13 +15,13 @@ class CheckBoxes extends BaseInput
         return new self($label, $name);
     }
 
-    public function html()
+    public function html($theme)
     {
         $this->setAttribute('type','checkbox');
-        return view('formy::inputs.checkbox-input', [
-            'input' => $this,
+
+        return $this->inputView('checkbox-input',$theme, [
             'options' => $this->options
-        ])->render();
+        ]);
     }
 
 
