@@ -1,13 +1,13 @@
 <div class="{{ $input->getWrapperClass() }}">
     <label for="el-{{$input->getAttribute('name')}}" class="{{ $input->getLabelClass() }}">{{ $input->getAttribute('label') }}</label>
     <div class="{{ $input->getParentClass() }}">
-
+        {{ $input->getAttribute('value') }}
         <select
             {!! $input->attributesString() !!}
             class="form-select {{ $input->classString() }}"
         >
             @foreach($options as $key=>$op)
-                <option {{ $input->selectedBy($key) ? "selected" : '' }} value="{{ $key }}">{{ $op }}</option>
+                <option {{ $input->getAttribute('value') == $key ? "selected" : '' }} value="{{ $key }}">{{ $op }}</option>
             @endforeach
         </select>
         <div class="invalid-feedback">
