@@ -4,6 +4,7 @@
 namespace Visanduma\LaravelFormy;
 
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Visanduma\LaravelFormy\Traits\Wrapper;
@@ -18,14 +19,22 @@ class Form
     private $config;
     protected string $createButtonText = "Create";
     protected string $updateButtonText = "Update";
+    protected string $resetButtonText = "Reset";
     private $validationMessages = [];
     protected $theme = "bootstrap5";
+    protected $submitButtonClass = "btn btn-primary";
+    protected $resetButtonClass = "btn btn-light";
+    protected $disableResetButton = false;
 
 
     public function __construct()
     {
         $this->setAttribute('method', 'post');
-        $this->config['btn.text']  = $this->createButtonText;
+        $this->config['submit-btn.text']  = $this->createButtonText;
+        $this->config['reset-btn.text']  = $this->resetButtonText;
+        $this->config['reset-btn.class']  = $this->resetButtonClass;
+        $this->config['submit-btn.class']  = $this->submitButtonClass;
+        $this->config['reset-btn.disabled']  = $this->disableResetButton;
         $this->inputCollection = $this->inputs();
 
     }
@@ -70,7 +79,8 @@ class Form
     {
         $this->bindData($this->getModel());
         $this->isUpdate = true;
-        $this->config['btn.text']  = $this->updateButtonText;
+        $this->config['submit-btn.text']  = $this->updateButtonText;
+        $this->config['reset-btn.disabled']  = true;
     }
 
     public function getModel()
@@ -126,6 +136,5 @@ class Form
     {
         return $this->validationMessages;
     }
-
 
 }
