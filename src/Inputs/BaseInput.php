@@ -26,7 +26,7 @@ abstract class BaseInput
     private $parentClass = [];
     private $labelClass = [];
     private $wrapperClass = [];
-    public $updateCallback = null;
+    private $updateCallback = null;
 
     public function __construct($label, $name)
     {
@@ -275,6 +275,11 @@ abstract class BaseInput
     {
         $data = array_merge($data,['input' => $this]);
         return view("formy::themes.$theme.$view", $data)->render();
+    }
+
+    public function hasCustomBinding()
+    {
+        return !is_null($this->updateCallback);
     }
 
 }

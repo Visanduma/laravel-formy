@@ -73,7 +73,7 @@ trait Wrapper
         if($this->bindingData){
             $this->config['submit-btn.text']  = $this->updateButtonText;
             foreach ($this->inputCollection as $input) {
-                if($input->updateCallback){
+                if($input->hasCustomBinding()){
                     $input->defaultValue($this->bindingData);
                 }else{
                     $input->value($this->bindingData[$input->getAttribute('name')]);
