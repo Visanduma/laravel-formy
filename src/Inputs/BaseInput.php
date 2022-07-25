@@ -26,6 +26,7 @@ abstract class BaseInput
     private $parentClass = [];
     private $labelClass = [];
     private $wrapperClass = [];
+    public $updateCallback = null;
 
     public function __construct($label, $name)
     {
@@ -81,6 +82,19 @@ abstract class BaseInput
         $this->setAttribute('value', old($this->getAttribute('name'),$value));
         return $this;
     }
+
+    public function bindUsing($cb)
+    {
+        $this->updateCallback = $cb;
+        return $this;
+    }
+
+    public function defaultValue($data)
+    {
+        $this->value(call_user_func($this->updateCallback,$data));
+        return $this;
+    }
+
 
     public function disable()
     {
@@ -262,4 +276,5 @@ abstract class BaseInput
         $data = array_merge($data,['input' => $this]);
         return view("formy::themes.$theme.$view", $data)->render();
     }
+
 }

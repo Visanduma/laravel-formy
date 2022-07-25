@@ -71,16 +71,19 @@ trait Wrapper
     {
         // TODO: improve this data binding
         if($this->bindingData){
-            $this->config['btn.text']  = $this->updateButtonText;
+            $this->config['submit-btn.text']  = $this->updateButtonText;
             foreach ($this->inputCollection as $input) {
-                $input->value($this->bindingData[$input->getAttribute('name')]);
+                if($input->updateCallback){
+                    $input->defaultValue($this->bindingData);
+                }else{
+                    $input->value($this->bindingData[$input->getAttribute('name')]);
+                }
             }
         }
     }
 
     public function getConfig($key = null)
     {
-
         return $key ? $this->config[$key] : $this->config;
     }
 
@@ -122,6 +125,7 @@ trait Wrapper
             }
 
         }
+
 
         return view('formy::form')
             ->with('html', $html)
