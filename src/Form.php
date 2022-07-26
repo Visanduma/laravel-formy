@@ -15,7 +15,7 @@ class Form
 
     protected $data;
     public $modelKey;
-    protected string $model;
+    protected $model;
     private $config;
     protected string $createButtonText = "Create";
     protected string $updateButtonText = "Update";
@@ -25,6 +25,7 @@ class Form
     protected $submitButtonClass = "btn btn-primary";
     protected $resetButtonClass = "btn btn-light";
     protected $disableResetButton = false;
+    protected array $customData = [];
 
 
     public function __construct()
@@ -35,7 +36,6 @@ class Form
         $this->config['reset-btn.class']  = $this->resetButtonClass;
         $this->config['submit-btn.class']  = $this->submitButtonClass;
         $this->config['reset-btn.disabled']  = $this->disableResetButton;
-        $this->inputCollection = $this->inputs();
 
     }
 
@@ -50,8 +50,7 @@ class Form
             $ins->modelKey = $model;
         }
 
-        $ins->updateView();
-        return $ins;
+        return $ins->updateView();
     }
 
     public static function createForm()
@@ -81,6 +80,8 @@ class Form
         $this->isUpdate = true;
         $this->config['submit-btn.text']  = $this->updateButtonText;
         $this->config['reset-btn.disabled']  = true;
+
+        return $this;
     }
 
     public function getModel()
@@ -94,6 +95,7 @@ class Form
         if($this->model::exists($key)){
             return $this->model::find($key);
         }
+
 
         return $this->model;
 
@@ -135,6 +137,21 @@ class Form
     public function getValidationMessages()
     {
         return $this->validationMessages;
+    }
+
+    public function withData(array $data)
+    {
+        $this->customData = $data;
+        return $this;
+    }
+
+    public function getData($key = null)
+    {
+        if($key){
+            return $this->customData[$key];
+        }
+
+        return $this->customData;
     }
 
 }

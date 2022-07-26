@@ -69,6 +69,8 @@ trait Wrapper
 
     private function bindInputs()
     {
+        $this->inputCollection = $this->inputs();
+
         // TODO: improve this data binding
         if($this->bindingData){
             $this->config['submit-btn.text']  = $this->updateButtonText;
@@ -125,7 +127,6 @@ trait Wrapper
             }
 
         }
-
 
         return view('formy::form')
             ->with('html', $html)
