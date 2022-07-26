@@ -9,6 +9,7 @@
                     class="form-check-input {{ $input->classString() }}"
                     type="checkbox"
                     name="{{ $input->getAttribute('name') }}"
+                    value="{{ $key }}"
                     id="formy-{{ $key }}"
                     {{ $input->selectedBy($key) ? "checked" : '' }}
                 >

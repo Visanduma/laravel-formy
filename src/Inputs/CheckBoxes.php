@@ -18,6 +18,7 @@ class CheckBoxes extends BaseInput
     public function html($theme)
     {
         $this->setAttribute('type','checkbox');
+        $this->setAttribute('name',$this->getAttribute('name')."[]");
 
         return $this->inputView('checkbox-input',$theme, [
             'options' => $this->options
