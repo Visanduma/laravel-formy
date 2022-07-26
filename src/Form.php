@@ -67,7 +67,7 @@ class Form
     public function inputsNames()
     {
         $nm = [];
-        foreach ($this->inputCollection as $ip) {
+        foreach ($this->inputs() as $ip) {
             $nm[] = $ip->getAttribute('name');
         }
 
@@ -104,8 +104,9 @@ class Form
 
     public function getValidationRules(): array
     {
+
         $rr = [];
-        foreach ($this->inputCollection as $input) {
+        foreach ($this->inputs() as $input) {
             $rr[$input->getAttribute('name')] = $input->getRules();
         }
 
@@ -115,7 +116,7 @@ class Form
     public function getValidationAttributeLabels(): array
     {
         $rr = [];
-        foreach ($this->inputCollection as $input) {
+        foreach ($this->inputs() as $input) {
             $rr[$input->getAttribute('name')] = $input->getLabel();
         }
 
