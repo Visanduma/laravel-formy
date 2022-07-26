@@ -38,7 +38,7 @@ abstract class BaseInput
         $this->id();
     }
 
-    protected function setAttribute($name, $value = "")
+    public function setAttribute($name, $value = "")
     {
         $this->attributes[$name] = $value;
         return $this;

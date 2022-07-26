@@ -69,11 +69,11 @@ trait Wrapper
 
     private function bindInputs()
     {
-
+        $this->inputCollection = $this->inputs();
         // TODO: improve this data binding
         if($this->bindingData){
             $this->config['submit-btn.text']  = $this->updateButtonText;
-            foreach ($this->inputs() as $input) {
+            foreach ($this->inputCollection as $input) {
                 if($input->hasCustomBinding()){
                     $input->defaultValue($this->bindingData);
                 }else{
@@ -102,7 +102,7 @@ trait Wrapper
         $html = "";
 
         $totalCols = 0;
-        foreach ($this->inputs() as $key=>$input) {
+        foreach ($this->inputCollection as $key=>$input) {
 
             $col = $input->getLayoutColumn();
             $row_prefix = "";
@@ -115,7 +115,7 @@ trait Wrapper
 
             $totalCols += $col;
 
-            if($totalCols == 12 || $input->onSingleLine() || $key + 1 == count($this->inputs())){
+            if($totalCols == 12 || $input->onSingleLine() || $key + 1 == count($this->inputCollection)){
                 $row_suffix = "</div>";
                 $totalCols = 0;
             }
