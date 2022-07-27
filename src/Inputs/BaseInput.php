@@ -171,12 +171,24 @@ abstract class BaseInput
         return $this;
     }
 
-    public function displayOnUpdate():bool
+    public function hideOnUpdate()
+    {
+         $this->showOnUpdate = false;
+         return $this;
+    }
+
+    public function hideOnCreate()
+    {
+        $this->showOnCreate = false;
+        return $this;
+    }
+
+    public function isVisibleOnUpdate()
     {
         return $this->showOnUpdate;
     }
 
-    public function displayOnCreate():bool
+    public function isVisibleOnCreate()
     {
         return $this->showOnCreate;
     }

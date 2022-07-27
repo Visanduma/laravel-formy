@@ -121,7 +121,7 @@ trait Wrapper
             }
 
 
-            if($this->isUpdate && $input->displayOnUpdate() ||  !$this->isUpdate){
+            if($this->isUpdate && $input->isVisibleOnUpdate() ||  !$this->isUpdate){
                 $html .= $row_prefix.$input->html($this->theme).$row_suffix;
             }
 
