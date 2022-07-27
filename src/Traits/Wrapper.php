@@ -96,7 +96,7 @@ trait Wrapper
         $this->setAttribute('action', route('formy.form-submit', [
             '_form' => encrypt($class),
             '_hash' => Hash::make($class),
-            '_model' => optional($this->bindingData)->getKey() ?? null
+            '_model' => optional($this->getModel())->getKey() ?? null
         ]));
 
         $html = "";

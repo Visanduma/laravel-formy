@@ -76,12 +76,17 @@ class Form
 
     public function updateView()
     {
-        $this->bindData($this->getModel());
+        $this->bindData($this->setBindingModel());
         $this->isUpdate = true;
         $this->config['submit-btn.text']  = $this->updateButtonText;
         $this->config['reset-btn.disabled']  = true;
 
         return $this;
+    }
+
+    protected function setBindingModel()
+    {
+        return $this->getModel();
     }
 
     public function getModel()
