@@ -3,17 +3,40 @@
 namespace Visanduma\LaravelFormy\Commands;
 
 use Illuminate\Console\Command;
+use Visanduma\LaravelFormy\Traits\StubHelper;
+use Illuminate\Filesystem\Filesystem;
 
 class LaravelFormyCommand extends Command
 {
-    public $signature = 'laravel-formy';
 
-    public $description = 'My command';
+    use StubHelper;
 
-    public function handle(): int
+    public $signature = 'make:form {name}';
+
+    public $description = 'Make new Formy class';
+
+    protected $files;
+
+    public function __construct(Filesystem $files)
     {
-        $this->comment('All done');
+        parent::__construct();
 
-        return self::SUCCESS;
+        $this->files = $files;
     }
+
+    public function handle()
+    {
+        $path = $this->getSourceFilePath();
+        $this->makeDirectory(dirname($path));
+        $contents = $this->getSourceFile();
+
+        if (!$this->files->exists($path)) {
+            $this->files->put($path, $contents);
+            $this->info("Form : {$path} created");
+        } else {
+            $this->warn("Form : {$path} already exits");
+        }
+    }
+
+
 }

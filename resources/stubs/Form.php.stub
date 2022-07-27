@@ -1,0 +1,33 @@
+<?php
+
+
+namespace $NAMESPACE$;
+
+
+use Illuminate\Http\Request;
+use Visanduma\LaravelFormy\Contracts\FormContract;
+use Visanduma\LaravelFormy\Form;
+
+class $CLASS_NAME$ extends Form implements FormContract
+{
+    //protected $model = User::class;
+
+    public function inputs(): array
+    {
+        return [
+            // add inputs here
+        ];
+    }
+
+    public function store(Request $request)
+    {
+        //$this->validate();
+
+    }
+
+    public function update(Request $request)
+    {
+        // $this->validate();
+
+    }
+}
