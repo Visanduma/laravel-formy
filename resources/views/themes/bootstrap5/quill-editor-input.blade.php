@@ -15,12 +15,14 @@
 
 </div>
 
-<script>
-    var options = @json($input->options());
-    var quill = new Quill('#{{ $input->getAttribute('id') }}', options);
+@push('formy-js')
+    <script>
+        var options = @json($input->options());
+        var quill = new Quill('#{{ $input->getAttribute('id') }}', options);
 
-    quill.on('editor-change',function(){
-        document.getElementById('formy-quill-content').value = quill.root.innerHTML
-    })
+        quill.on('editor-change',function(){
+            document.getElementById('formy-quill-content').value = quill.root.innerHTML
+        })
 
-</script>
+    </script>
+@endpush
