@@ -160,4 +160,14 @@ class Form
         return $this->customData;
     }
 
+    public function updateEntity()
+    {
+        $this->getModel()->update(request()->only($this->inputsNames()));
+    }
+
+    public function createEntity()
+    {
+        $this->model::create(request()->only($this->inputsNames()));
+    }
+
 }
