@@ -1,7 +1,6 @@
 <?php
 
 
-use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 
 Route::group(['middleware' => config('formy.middlewares')],function(){
     Route::post('formy/submit', [\Visanduma\LaravelFormy\Controllers\FormController::class,'handleSubmit'])->name('formy.form-submit');
