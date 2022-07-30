@@ -24,10 +24,10 @@ class LaravelFormyServiceProvider extends PackageServiceProvider
 
         $this->publishes([
             __DIR__.'/../resources/views/themes' => resource_path('views/vendor/formy/themes')
-        ], 'views');
+        ], 'formy-themes');
 
         $this->publishes([
             __DIR__.'/../public/formy' => public_path('vendor/formy/')
-        ], 'public');
+        ], 'formy-assets');
     }
 }
