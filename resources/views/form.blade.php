@@ -1,11 +1,11 @@
 @prepend('formy-css')
-<link href="{{ global_asset('vendor/formy/css/quill.snow.css') }}" rel="stylesheet">
-<link href="{{ global_asset('vendor/formy/css/filepond.css') }}" rel="stylesheet" />
+<link href="{{ asset('vendor/formy/css/quill.snow.css') }}" rel="stylesheet">
+<link href="{{ asset('vendor/formy/css/filepond.css') }}" rel="stylesheet" />
 @endprepend
 
 @prepend('formy-js')
-<script src="{{ global_asset('vendor/formy/js/quill.js') }}"></script>
-<script src="{{ global_asset('vendor/formy/js/filepond.js') }}"></script>
+<script src="{{ asset('vendor/formy/js/quill.js') }}"></script>
+<script src="{{ asset('vendor/formy/js/filepond.js') }}"></script>
 @endprepend
 
 <form {{ $form->attributesString() }} class="form {{ $form->classString() }}">
