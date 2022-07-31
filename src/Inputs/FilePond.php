@@ -19,7 +19,12 @@ class FilePond extends BaseInput
     {
         $ins = new static($label, $name);
         $ins->setAttribute('type','file');
-        $ins->setOption('server', route('formy.file-upload'));
+        $ins->setOption('server', [
+            'url' => route('formy.file-upload'),
+            'headers' => [
+                'X-CSRF-TOKEN' => csrf_token()
+            ]
+        ]);
         $ins->setOption('credits',false);
 
         return $ins;
