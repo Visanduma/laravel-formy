@@ -11,7 +11,8 @@ class QuillEditor extends BaseInput
     public static function make($label, $name = ""): QuillEditor
     {
         $ins = new static($label, $name);
-        $ins->height(200);
+        $ins->addWrapperClass('h-100');
+
 
         return $ins;
     }
