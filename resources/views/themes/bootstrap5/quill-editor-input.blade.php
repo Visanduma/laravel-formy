@@ -5,12 +5,12 @@
         <div class="{{ $input->classString() }}"  {!! $input->attributesString() !!}>
             {!! old($input->getAttribute('name'),$input->getAttribute('value')) !!}
         </div>
-        <div class="invalid-feedback">
+        <div class="text-danger">
             {{ $errors->first($input->getAttribute('name')) }}
             {{ $input->getErrorMessage() }}
         </div>
         <p class="form-text">{{ $input->getAttribute('helpText')  }}</p>
-        <input type="hidden" name="{{ $input->getAttribute('name') }}" value="" id="formy-quill-content">
+                <input type="hidden" name="{{ $input->getAttribute('name') }}" value="{{ old($input->getAttribute('name'),$input->getAttribute('value')) }}" id="formy-quill-content">
     </div>
 
 </div>
