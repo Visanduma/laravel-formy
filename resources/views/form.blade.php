@@ -16,4 +16,3 @@
         <button type="reset" class="{{ $form->getConfig('reset-btn.class') }}">{{ $form->getConfig('reset-btn.text') }}</button>
     @endif
 </form>
-
