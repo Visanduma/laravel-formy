@@ -4,7 +4,6 @@
 namespace Visanduma\LaravelFormy\Inputs;
 
 
-use Modules\Blog\Entities\BlogPost;
 use Visanduma\LaravelFormy\Traits\HasRelationship;
 use Visanduma\LaravelFormy\Traits\MultiChoice;
 

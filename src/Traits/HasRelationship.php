@@ -6,7 +6,7 @@ namespace Visanduma\LaravelFormy\Traits;
 
 trait HasRelationship
 {
-    public string $relation;
+    public $relation = null;
     public string $labelColumn;
 
     public function useRelation($name,$labelColumn = 'name')
@@ -23,9 +23,11 @@ trait HasRelationship
 
             $model = new $model();
 
-            if(is_callable([$model, $this->relation])){
+            if(method_exists($model,$this->relation)){
                 $ims = $model->{$this->relation}()->getModel()->all();
                 $this->options  = $ims->pluck( $this->labelColumn, $model->getKeyName() )->toArray();
+            }else{
+                throw new \Exception("Unknown relationship `{$this->relation}`");
             }
 
         }
