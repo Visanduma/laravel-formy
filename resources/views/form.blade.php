@@ -11,6 +11,7 @@
 <form {{ $form->attributesString() }} class="form {{ $form->classString() }}">
     @csrf
     {!! $html !!}
+
     <button type="submit" class="{{ $form->getConfig('submit-btn.class') }}">{{ $form->getConfig('submit-btn.text') }}</button>
     @if(!$form->getConfig('reset-btn.disabled'))
         <button type="reset" class="{{ $form->getConfig('reset-btn.class') }}">{{ $form->getConfig('reset-btn.text') }}</button>

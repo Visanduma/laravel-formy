@@ -10,9 +10,11 @@
     </div>
 </div>
 
+@push('formy-js')
 <script>
     FilePond.create(
         document.getElementById('{{ $input->getAttribute('id')  }}'),
         @json($input->options())
     )
 </script>
+@endpush

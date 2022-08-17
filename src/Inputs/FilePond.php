@@ -20,10 +20,10 @@ class FilePond extends BaseInput
         $ins = new static($label, $name);
         $ins->setAttribute('type','file');
         $ins->setOption('server', [
-            'url' => route('formy.file-upload'),
+            'process' => route('formy.file-upload'),
             'headers' => [
                 'X-CSRF-TOKEN' => csrf_token()
-            ]
+            ],
         ]);
         $ins->setOption('credits',false);
 
@@ -56,7 +56,6 @@ class FilePond extends BaseInput
     {
         $this->setOption('allowMultiple',true);
         $this->setOption('name',$this->getAttribute('name')."[]");
-//        $this->removeAttribute('name');
 
         return $this;
     }

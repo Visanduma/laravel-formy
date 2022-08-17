@@ -7,6 +7,7 @@ namespace Visanduma\LaravelFormy;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Visanduma\LaravelFormy\Controllers\FilePondController;
 use Visanduma\LaravelFormy\Traits\Wrapper;
 
 class Form
@@ -31,6 +32,7 @@ class Form
     public function __construct()
     {
         $this->setAttribute('method', 'post');
+
         $this->config['submit-btn.text']  = $this->createButtonText;
         $this->config['reset-btn.text']  = $this->resetButtonText;
         $this->config['reset-btn.class']  = $this->resetButtonClass;
@@ -162,12 +164,22 @@ class Form
 
     public function updateEntity()
     {
-        $this->getModel()->update(request()->only($this->inputsNames()));
+        return $this->getModel()->update(request()->only($this->inputsNames()));
     }
 
     public function createEntity()
     {
-        $this->model::create(request()->only($this->inputsNames()));
+        return $this->model::create(request()->only($this->inputsNames()));
+    }
+
+    public function injectFiles(array $files)
+    {
+        foreach ($files as $file){
+            request()->files->set( $file,
+                new \Illuminate\Http\UploadedFile(storage_path("app/".FilePondController::ROOT_DIR."/".request()->get($file)),$file),
+            );
+        }
+
     }
 
 }

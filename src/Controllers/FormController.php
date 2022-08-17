@@ -17,11 +17,11 @@ class FormController extends Controller
             throw new Exception('Form verification fail');
         }
 
-        $bb = new $class();
+        $form = new $class();
 
         if($request->get('_model')){
-            return $bb->update($request);
+            return $form->update($request);
         }
-        return $bb->store($request);
+        return $form->store($request);
     }
 }
