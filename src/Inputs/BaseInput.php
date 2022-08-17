@@ -182,6 +182,18 @@ abstract class BaseInput
         $this->showOnCreate = false;
         return $this;
     }
+    
+    public function showOnUpdate()
+    {
+        $this->showOnUpdate = true;
+        return $this;
+    }
+
+    public function showOnCreate()
+    {
+        $this->showOnCreate = true;
+        return $this;
+    }
 
     public function isVisibleOnUpdate()
     {
