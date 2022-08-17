@@ -172,14 +172,18 @@ class Form
         return $this->model::create(request()->only($this->inputsNames()));
     }
 
-    public function injectFiles(array $files)
+    public function injectFiles()
     {
-        foreach ($files as $file){
-            request()->files->set( $file,
-                new \Illuminate\Http\UploadedFile(storage_path("app/".FilePondController::ROOT_DIR."/".request()->get($file)),$file),
-            );
-        }
+        foreach ($this->inputs() as $input){
 
+            $inputName = $input->getAttribute('name');
+
+            if($input->getAttribute('type') == 'file' && request()->get($inputName)){
+                request()->files->set( $inputName,
+                    new \Illuminate\Http\UploadedFile(storage_path("app/".FilePondController::ROOT_DIR."/".request()->get($inputName)),request()->get($inputName)),
+                );
+            }
+        }
     }
 
 }

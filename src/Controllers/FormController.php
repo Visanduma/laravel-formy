@@ -19,6 +19,9 @@ class FormController extends Controller
 
         $form = new $class();
 
+        // inject uploaded files if any
+        $form->injectFiles();
+
         if($request->get('_model')){
             return $form->update($request);
         }

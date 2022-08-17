@@ -9,15 +9,22 @@ class TextInput extends BaseInput
 
     public static function make($label, $name = ""): TextInput
     {
-        return new self($label, $name);
+        $ins = new self($label, $name);
+        $ins->setAttribute('type','text');
+
+        return $ins;
     }
 
 
     public function html($theme)
     {
-        $this->setAttribute('type','text');
-
         return $this->inputView('text-input',$theme);
+    }
+
+    public function type($inputType)
+    {
+        $this->setAttribute('type',$inputType);
+        return $this;
     }
 
 
