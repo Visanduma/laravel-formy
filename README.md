@@ -1,21 +1,8 @@
 # 🚫 UNDER DEVELOPMENT
 
-# This is my package laravel-formy
+# Laravel-formy
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/visanduma/laravel-formy.svg?style=flat-square)](https://packagist.org/packages/visanduma/laravel-formy)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/visanduma/laravel-formy/run-tests?label=tests)](https://github.com/visanduma/laravel-formy/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/visanduma/laravel-formy/Check%20&%20fix%20styling?label=code%20style)](https://github.com/visanduma/laravel-formy/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/visanduma/laravel-formy.svg?style=flat-square)](https://packagist.org/packages/visanduma/laravel-formy)
-
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
-
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-formy.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-formy)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+## Class based simple Form builder for any laravel Application
 
 ## Installation
 
@@ -78,8 +65,8 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [LaHiRu](https://github.com/Visanduma)
-- [All Contributors](../../contributors)
+-   [LaHiRu](https://github.com/Visanduma)
+-   [All Contributors](../../contributors)
 
 ## License
 
