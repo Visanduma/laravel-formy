@@ -7,29 +7,25 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Visanduma\LaravelFormy\Handlers\FormyMediaHandler;
+use Visanduma\LaravelFormy\Models\FormyMedia;
 
 class FilePondController extends Controller
 {
-    const ROOT_DIR = "formy/temp-uploads";
+    private $handler;
+
+    public function __construct()
+    {
+        $this->handler = new (config('formy.media.handler'));
+    }
 
     public function handleUpload(Request $request)
     {
-        $rootDir =  self::ROOT_DIR;
+        return $this->handler->upload($request);
+    }
 
-        if($request->isMethod('post')){
-
-            $file = Arr::flatten($request->allFiles())[0];
-            $filename = Str::random()."_".time().".".$file->getClientOriginalExtension();
-            $file->storeAs("$rootDir",$filename);
-
-            return $filename;
-        }
-
-        if($request->isMethod('delete')){
-            $filename = $request->getContent();
-            Storage::delete("$rootDir/$filename");
-
-            return "DELETED";
-        }
+    public function handleDelete(Request $request)
+    {
+        return $this->handler->delete($request);
     }
 }

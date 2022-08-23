@@ -27,6 +27,7 @@ abstract class BaseInput
     private $labelClass = [];
     private $wrapperClass = [];
     private $updateCallback = null;
+    public $files = [];
 
     public function __construct($label, $name)
     {
@@ -182,7 +183,7 @@ abstract class BaseInput
         $this->showOnCreate = false;
         return $this;
     }
-    
+
     public function showOnUpdate()
     {
         $this->showOnUpdate = true;
@@ -304,6 +305,11 @@ abstract class BaseInput
     public function hasCustomBinding()
     {
         return !is_null($this->updateCallback);
+    }
+
+    public function isFileInput():bool
+    {
+        return $this->getAttribute('type') == 'file';
     }
 
 }

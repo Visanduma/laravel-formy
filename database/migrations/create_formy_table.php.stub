@@ -8,11 +8,14 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('laravel_formy_table', function (Blueprint $table) {
+        Schema::create('laravel_formy_media', function (Blueprint $table) {
             $table->id();
-
-            // add fields
-
+            $table->string('original_filename');
+            $table->string('filename');
+            $table->string('path');
+            $table->string('mime');
+            $table->string('disk');
+            $table->morphs('owner');
             $table->timestamps();
         });
     }

@@ -5,6 +5,7 @@
 Route::group(['middleware' => config('formy.middlewares')],function(){
     Route::post('formy/submit', [\Visanduma\LaravelFormy\Controllers\FormController::class,'handleSubmit'])->name('formy.form-submit');
 
+    Route::post('formy/file/delete', [\Visanduma\LaravelFormy\Controllers\FilePondController::class,'handleDelete'])->name('formy.delete-file');
     Route::any('formy/filepond',[\Visanduma\LaravelFormy\Controllers\FilePondController::class,'handleUpload'])->name('formy.file-upload');
 });
 

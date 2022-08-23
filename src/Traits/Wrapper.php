@@ -74,6 +74,11 @@ trait Wrapper
         if($this->bindingData){
             $this->config['submit-btn.text']  = $this->updateButtonText;
             foreach ($this->inputCollection as $input) {
+
+                if($input->isFileInput()){
+                    $this->bindFiles($input);
+                }
+
                 if($input->hasCustomBinding()){
                     $input->defaultValue($this->bindingData);
                 }else{
@@ -81,6 +86,18 @@ trait Wrapper
                 }
             }
         }
+    }
+
+    private function bindFiles($input)
+    {
+        $input->setFilesList(function(){
+            $handler = new (config('formy.media.handler'));
+
+            if($this->isUpdateForm()){
+                return $handler->load($this->getModel());
+            }
+
+        });
     }
 
     public function getConfig($key = null)

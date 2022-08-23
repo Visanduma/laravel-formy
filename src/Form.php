@@ -178,12 +178,28 @@ class Form
 
             $inputName = $input->getAttribute('name');
 
-            if($input->getAttribute('type') == 'file' && request()->get($inputName)){
+            if($input->isFileInput() && request()->get($inputName)){
+
                 request()->files->set( $inputName,
-                    new \Illuminate\Http\UploadedFile(storage_path("app/".FilePondController::ROOT_DIR."/".request()->get($inputName)),request()->get($inputName)),
+                    new \Illuminate\Http\UploadedFile(storage_path("app/".config('formy.media.temp_path')."/".request()->get($inputName)),request()->get($inputName)),
                 );
             }
         }
+    }
+
+    public function uploadFiles()
+    {
+
+    }
+
+    public function isUpdateForm():bool
+    {
+        return $this->isUpdate;
+    }
+
+    public function isCreateForm():bool
+    {
+        return !$this->isUpdate;
     }
 
 }

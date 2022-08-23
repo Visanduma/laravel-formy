@@ -21,11 +21,13 @@ class FilePond extends BaseInput
         $ins->setAttribute('type','file');
         $ins->setOption('server', [
             'process' => route('formy.file-upload'),
+            'revert' => route('formy.file-upload'),
             'headers' => [
                 'X-CSRF-TOKEN' => csrf_token()
             ],
         ]);
         $ins->setOption('credits',false);
+
 
         return $ins;
     }
@@ -83,5 +85,15 @@ class FilePond extends BaseInput
     }
 
 
+    public function getFilesList()
+    {
+        return $this->files;
+    }
+
+    public function setFilesList($build)
+    {
+        $this->files = call_user_func($build);
+        return $this;
+    }
 
 }
