@@ -10,6 +10,11 @@
     "license": "MIT",
     "authors": [
         {
+            "name": "Visanduma R & D (pvt) Ltd",
+            "email": "info@visanduma.com",
+            "role": "Owner"
+        },
+        {
             "name": "LaHiRu",
             "email": "lahirulhr@gmail.com",
             "role": "Developer"
