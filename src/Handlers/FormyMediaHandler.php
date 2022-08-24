@@ -19,7 +19,7 @@ class FormyMediaHandler implements FileManagmentContract
         if($request->isMethod('post')){
 
             $file = Arr::flatten($request->allFiles())[0]; // proccess single file at once
-            $filename = Str::random()."_".time().".".$file->getClientOriginalExtension();
+            $filename = $file->getClientOriginalName()."_".time().".".$file->getClientOriginalExtension();
             $file->storeAs($tempPath,$filename);
 
             return $filename;
@@ -56,8 +56,9 @@ class FormyMediaHandler implements FileManagmentContract
                 return [
                     'id' => $itm->id,
                     'name' => $itm->original_filename,
-                    'url' => 'sdfs',
+                    'url' => Storage::disk()->url($itm['path']),
                 ];
             });
     }
+
 }

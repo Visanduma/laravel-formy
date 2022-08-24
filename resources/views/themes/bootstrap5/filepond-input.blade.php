@@ -17,7 +17,7 @@
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 {{ $file['name'] }}
                 <div>
-                    <a href="#"><i class="bi bi-eye"></i></a>
+                    <a href="{{ $file['url'] }}"><i class="bi bi-eye"></i></a>
                     <a class="del-btn" data-id="{{ $file['id'] }}" href="#"><i class="bi bi-trash"></i></a>
                 </div>
             </li>

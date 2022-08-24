@@ -9,7 +9,7 @@ return [
 
     'media' => [
 
-        'disk' => 'local',
+        'disk' => 'public',
 
         'upload_path' => 'formy-media',
 

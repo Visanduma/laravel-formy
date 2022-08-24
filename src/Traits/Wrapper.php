@@ -56,11 +56,6 @@ trait Wrapper
         unset($this->classes[$value]);
     }
 
-    public function onSubmit($callback)
-    {
-        call_user_func($callback);
-    }
-
     public function bindData($data)
     {
         $this->bindingData = $data;
@@ -72,18 +67,22 @@ trait Wrapper
         $this->inputCollection = $this->inputs();
         // TODO: improve this data binding
         if($this->bindingData){
+
             $this->config['submit-btn.text']  = $this->updateButtonText;
+
             foreach ($this->inputCollection as $input) {
 
                 if($input->isFileInput()){
                     $this->bindFiles($input);
+                    continue;
                 }
 
                 if($input->hasCustomBinding()){
                     $input->defaultValue($this->bindingData);
-                }else{
-                    $input->value($this->bindingData[$input->getAttribute('name')]);
+                    continue;
                 }
+
+                $input->setValue($this->bindingData[$input->getAttribute('name')]);
             }
         }
     }
