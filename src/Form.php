@@ -18,15 +18,16 @@ class Form
     public $modelKey;
     protected $model;
     private $config;
+    protected $disableResetButton = false;
+    private $validationMessages = [];
+    protected array $customData = [];
+
     protected string $createButtonText = "Create";
     protected string $updateButtonText = "Update";
     protected string $resetButtonText = "Reset";
-    private $validationMessages = [];
     protected $theme = "bootstrap5";
     protected $submitButtonClass = "btn btn-primary";
     protected $resetButtonClass = "btn btn-light";
-    protected $disableResetButton = false;
-    protected array $customData = [];
 
 
     public function __construct()
