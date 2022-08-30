@@ -101,12 +101,28 @@ trait Wrapper
 
     public function getConfig($key = null)
     {
+
         return $key ? $this->config[$key] : $this->config;
+    }
+
+    protected function beforeBinding()
+    {
+
+    }
+
+    protected function afterBinding()
+    {
+
     }
 
     public function render()
     {
+        $this->beforeBinding();
+
         $this->bindInputs();
+
+        $this->afterBinding();
+
         $class = get_called_class();
 
         $this->setAttribute('action', route('formy.form-submit', [

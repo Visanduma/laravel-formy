@@ -19,6 +19,7 @@ class Form
     protected $model;
     private $config;
     protected $disableResetButton = false;
+    protected $disableSubmitButton = false;
     private $validationMessages = [];
     protected array $customData = [];
 
@@ -39,6 +40,9 @@ class Form
         $this->config['reset-btn.class']  = $this->resetButtonClass;
         $this->config['submit-btn.class']  = $this->submitButtonClass;
         $this->config['reset-btn.disabled']  = $this->disableResetButton;
+        $this->config['submit-btn.disabled']  = $this->disableSubmitButton;
+
+        $this->setup();
 
     }
 
@@ -193,6 +197,14 @@ class Form
 
     }
 
+    /**
+     * Setup form configration before build it
+     */
+    protected function setup():void
+    {
+        // setup form
+    }
+
     public function isUpdateForm():bool
     {
         return $this->isUpdate;
@@ -201,6 +213,15 @@ class Form
     public function isCreateForm():bool
     {
         return !$this->isUpdate;
+    }
+
+    /**
+     *  Disable form submit button
+     */
+    public function disableFormSubmit():void
+    {
+        $this->config['submit-btn.disabled']  = true;
+
     }
 
 }
