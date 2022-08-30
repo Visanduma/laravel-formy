@@ -27,5 +27,11 @@ class TextInput extends BaseInput
         return $this;
     }
 
+    public function autoCompleteOff()
+    {
+        $this->setAttribute('autocomplete','off');
+        return $this;
+    }
+
 
 }
