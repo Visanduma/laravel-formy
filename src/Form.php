@@ -167,14 +167,18 @@ class Form
         return $this->customData;
     }
 
-    public function updateEntity()
+    public function updateEntity($except = [])
     {
-        return $this->getModel()->update(request()->only($this->inputsNames()));
+        $inputs = request()->only($this->inputsNames());
+
+        return $this->getModel()->update(array_diff($inputs,$except));
     }
 
-    public function createEntity()
+    public function createEntity($except = [])
     {
-        return $this->model::create(request()->only($this->inputsNames()));
+        $inputs = request()->only($this->inputsNames());
+
+        return $this->model::create(array_diff($inputs,$except));
     }
 
     public function injectFiles()

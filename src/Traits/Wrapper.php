@@ -82,7 +82,7 @@ trait Wrapper
                     continue;
                 }
 
-                $input->setValue($this->bindingData[$input->getAttribute('name')]);
+                $input->setValue($this->bindingData[$input->getAttribute('name')] ?? "");
             }
         }
     }
