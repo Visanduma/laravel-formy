@@ -58,9 +58,9 @@ abstract class BaseInput
     /**
      * Set input help text
      * @param $value
-     * @return $this
+     *
      */
-    public function helpText($value):this
+    public function helpText($value)
     {
         $this->setAttribute('helpText', $value);
         return $this;
