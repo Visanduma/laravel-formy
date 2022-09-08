@@ -69,7 +69,7 @@ class FilePond extends BaseInput
         $output = [];
 
         foreach (Arr::wrap($files) as $file){
-            $source = FilePondController::ROOT_DIR."/$file";
+            $source = config('formy.media.temp_path')."/$file";
             $destination = Str::finish($destination,"/$file");
 
             Storage::move($source, $destination);
