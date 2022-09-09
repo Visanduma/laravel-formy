@@ -132,4 +132,9 @@ trait InputAttributes
     {
         return $this->getAttribute('name');
     }
+
+    public function attributesArray()
+    {
+        return $this->attributes;
+    }
 }

@@ -38,7 +38,7 @@ class LaravelFormyServiceProvider extends PackageServiceProvider
     }
 
 
-    public function booting(Closure $callback)
+    public function bootingPackage()
     {
         Blade::directive('formy',function($form){
             return "<?php echo " .$form."->render() ?>";

@@ -9,7 +9,6 @@
             {{ $errors->first($input->getAttribute('name')) }}
             {{ $input->getErrorMessage() }}
         </div>
-
         <p class="form-text">{{ $input->getAttribute('helpText')  }}</p>
     </div>
 

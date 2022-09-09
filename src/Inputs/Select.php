@@ -4,12 +4,13 @@
 namespace Visanduma\LaravelFormy\Inputs;
 
 
+use Visanduma\LaravelFormy\Traits\HasInertiaInput;
 use Visanduma\LaravelFormy\Traits\HasRelationship;
 use Visanduma\LaravelFormy\Traits\MultiChoice;
 
 class Select extends BaseInput
 {
-    use MultiChoice, HasRelationship;
+    use MultiChoice, HasRelationship, HasInertiaInput;
 
 
     public static function make($label, $name = ""): Select

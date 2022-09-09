@@ -4,6 +4,7 @@
 namespace Visanduma\LaravelFormy\Traits;
 
 use Illuminate\Support\Facades\Hash;
+use Visanduma\LaravelFormy\Inputs\Button;
 
 trait Wrapper
 {
@@ -18,6 +19,11 @@ trait Wrapper
     {
         $this->attributes[$name] = $value;
         return $this;
+    }
+
+    private function getAttribute($name)
+    {
+        return $this->attributes[$name];
     }
 
     public function action($url)
@@ -115,22 +121,8 @@ trait Wrapper
 
     }
 
-    public function render()
+    private function compileHtml()
     {
-        $this->beforeBinding();
-
-        $this->bindInputs();
-
-        $this->afterBinding();
-
-        $class = get_called_class();
-
-        $this->setAttribute('action', route('formy.form-submit', [
-            '_form' => encrypt($class),
-            '_hash' => Hash::make($class),
-            '_model' => optional($this->getModel())->getKey() ?? null
-        ]));
-
         $html = "";
 
         $totalCols = 0;
@@ -159,10 +151,70 @@ trait Wrapper
 
         }
 
+        return $html;
+    }
+
+    private function generateFormButtons()
+    {
+        $buttons = [
+            Button::make('Submit')
+                ->addClass('btn btn-primary')
+                ->setAttribute('@click','submit')
+                ->setAttribute(':disabled','form.processing')
+                ->setAttribute('hasSpinner',true)
+                ->html($this->theme),
+
+            Button::make('Reset')
+                ->addClass('btn btn-light')
+                ->setAttribute('@click','reset')
+                ->html($this->theme),
+        ];
+
+        return implode("",$buttons);
+    }
+
+    private function getFormSubmitUrl()
+    {
+        $class = get_called_class();
+
+        return  route('formy.form-submit', [
+            '_form' => encrypt($class),
+            '_hash' => Hash::make($class),
+            '_model' => optional($this->getModel())->getKey() ?? null
+        ]);
+    }
+
+    public function render()
+    {
+        $this->beforeBinding();
+
+        $this->bindInputs();
+
+        $this->afterBinding();
+
+        $this->setAttribute('action',$this->getFormSubmitUrl());
+
+        $html = $this->compileHtml();
+
         return view('formy::form')
             ->with('html', $html)
             ->with('form', $this)
             ->render();
+    }
+
+    public function toInertia()
+    {
+        $comps = [];
+
+        foreach ($this->inputs() as $inp){
+            $comps[] = $inp->getVueComponentData();
+        }
+
+        return [
+            'components' => $comps,
+            'url' => $this->getFormSubmitUrl(),
+            'inputs' => array_fill_keys($this->inputsNames(),'')
+        ];
     }
 
 }

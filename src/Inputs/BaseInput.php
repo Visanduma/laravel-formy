@@ -80,11 +80,13 @@ abstract class BaseInput
     /**
      * Add css class to input
      * @param $value
-     * @returns void
+     * @returns $this
      */
-    protected function addClass($value):void
+    public function addClass($value)
     {
         $this->classes[] = $value;
+
+        return $this;
     }
 
     /**
