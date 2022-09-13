@@ -205,15 +205,19 @@ trait Wrapper
     public function toInertia()
     {
         $comps = [];
+        $formInputs = [];
 
         foreach ($this->inputs() as $inp){
             $comps[] = $inp->getVueComponentData();
+            $formInputs[$inp->getName()] = $this->bindingData[$inp->getName()] ?? '';
         }
+
 
         return [
             'components' => $comps,
             'url' => $this->getFormSubmitUrl(),
-            'inputs' => array_fill_keys($this->inputsNames(),'')
+            'inputs' => $formInputs,
+            'isUpdateForm' => $this->isUpdateForm()
         ];
     }
 

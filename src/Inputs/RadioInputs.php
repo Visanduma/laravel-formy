@@ -4,11 +4,12 @@
 namespace Visanduma\LaravelFormy\Inputs;
 
 
+use Visanduma\LaravelFormy\Traits\HasInertiaInput;
 use Visanduma\LaravelFormy\Traits\MultiChoice;
 
 class RadioInputs extends BaseInput
 {
-    use MultiChoice;
+    use MultiChoice, HasInertiaInput;
 
 
     public static function make($label, $name = ""): RadioInputs

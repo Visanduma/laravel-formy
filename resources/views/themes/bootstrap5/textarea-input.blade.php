@@ -4,9 +4,7 @@
         <textarea
             class="form-control {{ $input->classString() }} @if($errors->has($input->getAttribute('name'))) is-invalid @endif"
            {!! $input->attributesString() !!}
-    >
- {{ old($input->getAttribute('name'),$input->getAttribute('value')) }}
-    </textarea>
+    >{{ old($input->getAttribute('name'),$input->getAttribute('value')) }}</textarea>
         <div class="invalid-feedback">
             {{ $errors->first($input->getAttribute('name')) }}
             {{ $input->getErrorMessage() }}
