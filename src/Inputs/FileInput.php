@@ -4,8 +4,11 @@
 namespace Visanduma\LaravelFormy\Inputs;
 
 
+use Visanduma\LaravelFormy\Traits\HasInertiaInput;
+
 class FileInput extends BaseInput
 {
+    use HasInertiaInput;
 
     public static function make($label, $name = ""): FileInput
     {

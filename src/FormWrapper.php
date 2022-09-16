@@ -92,7 +92,7 @@ class FormWrapper
         }
     }
 
-    public function render()
+    private function compileHtml()
     {
         $this->bindInputs();
 
@@ -113,10 +113,18 @@ class FormWrapper
 
         }
 
+        return $html;
+    }
+
+    public function render()
+    {
+        $html = $this->compileHtml();
+
         return view('form.form')
             ->with('html', $html)
             ->with('form', $this)
             ->render();
     }
+
 
 }
