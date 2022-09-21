@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Support\Facades\Blade;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Visanduma\LaravelFormy\Commands\FormyInstallCommand;
 use Visanduma\LaravelFormy\Commands\LaravelFormyCommand;
 
 class LaravelFormyServiceProvider extends PackageServiceProvider
@@ -24,7 +25,7 @@ class LaravelFormyServiceProvider extends PackageServiceProvider
             ->hasRoute('web')
             ->hasMigration('create_formy_table')
             ->runsMigrations()
-            ->hasCommand(LaravelFormyCommand::class);
+            ->hasCommands([LaravelFormyCommand::class, FormyInstallCommand::class]);
 
         $this->publishes([
             __DIR__.'/../resources/views/themes' => resource_path('views/vendor/formy/themes')
