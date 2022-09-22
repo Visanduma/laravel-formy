@@ -208,10 +208,15 @@ trait Wrapper
         $formInputs = [];
 
         foreach ($this->inputs() as $inp){
-            $comps[] = $inp->getVueComponentData();
-            $formInputs[$inp->getName()] = $this->bindingData[$inp->getName()] ?? '';
-        }
 
+            if($inp->relation ?? null){
+                $inp->fillRelationData($this->model);
+            }
+
+            $formInputs[$inp->getName()] = $this->bindingData[$inp->getName()] ?? '';
+            $comps[] = $inp->getVueComponentData();
+
+        }
 
         return [
             'components' => $comps,

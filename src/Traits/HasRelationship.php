@@ -17,7 +17,7 @@ trait HasRelationship
         return $this;
     }
 
-    private function getRelationData($model)
+    public function getRelationData($model)
     {
         if($this->relation){
 
@@ -25,11 +25,16 @@ trait HasRelationship
 
             if(method_exists($model,$this->relation)){
                 $ims = $model->{$this->relation}()->getModel()->all();
-                $this->options  = $ims->pluck( $this->labelColumn, $model->getKeyName() )->toArray();
+                return $ims->pluck( $this->labelColumn, $model->getKeyName() )->toArray();
             }else{
                 throw new \Exception("Unknown relationship `{$this->relation}`");
             }
 
         }
+    }
+
+    public function fillRelationData($model)
+    {
+        $this->options($this->getRelationData($model));
     }
 }

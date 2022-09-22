@@ -17,6 +17,11 @@ trait MultiChoice
         return $this;
     }
 
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
     public function selected($value)
     {
         $this->selectedValues = Arr::wrap($value);
