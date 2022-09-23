@@ -3,6 +3,7 @@
 namespace Visanduma\LaravelFormy;
 
 use Closure;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -44,8 +45,6 @@ class LaravelFormyServiceProvider extends PackageServiceProvider
         Blade::directive('formy',function($form){
             return "<?php echo " .$form."->render() ?>";
         });
-
-
     }
 
 }

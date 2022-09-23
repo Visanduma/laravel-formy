@@ -4,30 +4,42 @@
 namespace Visanduma\LaravelFormy\Controllers;
 
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\Request;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Visanduma\LaravelFormy\Models\FormyMedia;
+use Illuminate\Support\Arr;
 
 class FormController extends Controller
 {
+    private $formClass,$className;
+
+    public function __construct()
+    {
+        $this->className = decrypt(request()->get('_form'));
+        $this->formClass = new $this->className();
+
+        // apply middlewares
+        $excluded = array_diff(config('formy.middlewares'),$this->formClass->withoutFormMiddlewares());
+
+        $this->middleware(array_merge($excluded,$this->formClass->formMiddlewares()));
+
+    }
+
     public function handleSubmit(Request $request)
     {
-        $class = decrypt($request->get('_form'));
-        $verify = \Illuminate\Support\Facades\Hash::check($class, $request->get('_hash'));
 
-        if(!$verify){
+        $verify = \Illuminate\Support\Facades\Hash::check($this->className, $request->get('_hash'));
+
+        if (!$verify) {
             throw new Exception('Form verification fail');
         }
 
-        $form = new $class();
-
         // inject uploaded files if any
-        $form->injectFiles();
+        $this->formClass->injectFiles();
 
-        if($request->get('_model')){
-            return $form->update($request);
+        if ($request->get('_model')) {
+            return $this->formClass->update($request);
         }
-        return $form->store($request);
+        return $this->formClass->store($request);
     }
 
 

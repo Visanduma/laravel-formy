@@ -29,6 +29,8 @@ class Form
     protected $theme = "bootstrap5";
     protected $submitButtonClass = "btn btn-primary";
     protected $resetButtonClass = "btn btn-light";
+    protected $middlewares = [];
+    protected $withoutMiddlewares = [];
 
 
     public function __construct()
@@ -202,7 +204,7 @@ class Form
     }
 
     /**
-     * Setup form configration before build it
+     * Setup form configuration before build it
      */
     protected function setup():void
     {
@@ -226,6 +228,16 @@ class Form
     {
         $this->config['submit-btn.disabled']  = true;
 
+    }
+
+    public function formMiddlewares():array
+    {
+        return $this->middlewares;
+    }
+
+    public function withoutFormMiddlewares():array
+    {
+        return $this->withoutMiddlewares;
     }
 
 }
