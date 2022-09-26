@@ -2,19 +2,20 @@
 
 namespace Visanduma\LaravelFormy\Inputs;
 
-class PasswordInput extends BaseInput
+class PasswordInput extends TextInput
 {
-    public bool $showOnUpdate = false;
-
     public static function make($label, $name = ""): PasswordInput
     {
-        return new self($label, $name);
+        $ins = new self($label, $name);
+        $ins->setAttribute('type','password');
+
+        return $ins;
     }
 
-    public function html($theme)
+    protected function getComponentName(): string
     {
-        $this->setAttribute('type','password');
-
-        return $this->inputView('text-input',$theme);
+        return 'TextInput';
     }
+
+
 }

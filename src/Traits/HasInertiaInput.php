@@ -15,8 +15,13 @@ trait HasInertiaInput
 
 
         return [
-            'component' => class_basename($this),
+            'component' => $this->getComponentName(),
             'binding' => $bindings,
         ];
+    }
+
+    protected function getComponentName():string
+    {
+        return class_basename($this);
     }
 }
