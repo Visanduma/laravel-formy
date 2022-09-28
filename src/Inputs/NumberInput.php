@@ -2,18 +2,30 @@
 
 namespace Visanduma\LaravelFormy\Inputs;
 
+use Visanduma\LaravelFormy\Traits\HasInertiaInput;
+
+
 class NumberInput extends BaseInput
 {
+    use HasInertiaInput;
+
+
     public bool $showOnUpdate = true;
 
     public static function make($label, $name = ""): NumberInput
     {
-        return new self($label, $name);
+        $el = new self($label, $name);
+        $el->setAttribute('type','number');
+        return $el;
     }
 
     public function html($theme)
     {
-        $this->setAttribute('type','number');
         return $this->inputView('text-input',$theme);
+    }
+
+     protected function getComponentName():string
+    {
+        return "TextInput";
     }
 }

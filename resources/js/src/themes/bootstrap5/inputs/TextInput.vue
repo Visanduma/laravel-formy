@@ -1,8 +1,7 @@
 <template>
-  <InputWrapper>
+  <InputWrapper :class="wrapperClassString">
     <label v-text="label"></label>
     <input
-
         :autocomplete="autocomplete"
         :class="[{ 'is-invalid': errors[name]}, classString]"
         :name="name"
@@ -29,6 +28,7 @@ export default {
     name: String,
     label: String,
     classString: String,
+    wrapperClassString: String,
     type: {type: String, default: 'text'},
     placeholder: {type: String, default: ""},
     value: [String, Number],
