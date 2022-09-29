@@ -11,7 +11,8 @@
     "dev": "npm run development",
     "development": "mix",
     "build": "node build/build.js","prod": "npm run production",
-    "production": "mix --production"
+    "production": "mix --production",
+     "watch": "mix watch"
   },
   "dependencies": {
     "vue": "^2.6.14"

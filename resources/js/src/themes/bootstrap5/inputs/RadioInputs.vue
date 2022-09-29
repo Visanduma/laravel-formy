@@ -11,7 +11,7 @@
           :name="name"
           :value="k"
           type="radio"
-          @change="$emit('input', $event.target.value)"
+          @input="$emit('input', $event.target.value)"
       >
       <label :for="`formy-radio-${k}`" class="form-check-label">
         {{ option }}
@@ -35,7 +35,7 @@ export default {
     name: String,
     label: String,
     classString: String,
-    value: [String, Number],
+    value: [String, Number, Boolean],
     options: [Array, Object],
     errors: Object,
   },
@@ -43,7 +43,7 @@ export default {
   computed: {
     isInvalid() {
       return this.errors[this.name]
-    }
+    },
   }
 }
 </script>

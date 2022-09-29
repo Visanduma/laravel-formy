@@ -38,9 +38,9 @@ trait InputAttributes
     /**
      * Remove css class from input
      * @param $class
-     * @return self
+
      */
-    protected function removeClass($class):self
+    protected function removeClass($class)
     {
         unset($this->classes[$class]);
     }
@@ -110,6 +110,13 @@ trait InputAttributes
         $this->setAttribute('value', old($this->getAttribute('name'),$value));
         return $this;
     }
+
+    public function getValue()
+    {
+       return  $this->getAttribute('value',"");
+
+    }
+
 
     public function disable()
     {

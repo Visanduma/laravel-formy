@@ -76,8 +76,8 @@ class Form
     public function inputsNames()
     {
         $nm = [];
-        foreach ($this->inputs() as $ip) {
-            $nm[] = $ip->getAttribute('name');
+        foreach ($this->inputs() as $inp) {
+            $nm[] = $inp->getAttribute('name');
         }
 
         return $nm;
@@ -162,7 +162,7 @@ class Form
 
     public function getData($key = null)
     {
-        if($key){
+        if($key && array_key_exists($key,$this->customData)){
             return $this->customData[$key];
         }
 
@@ -185,8 +185,8 @@ class Form
 
     public function injectFiles()
     {
-        foreach ($this->inputs() as $input){
 
+        foreach ($this->inputs() as $input){
             $inputName = $input->getAttribute('name');
 
             if($input->isFileInput() && request()->get($inputName)){

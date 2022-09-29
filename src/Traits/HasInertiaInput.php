@@ -12,9 +12,8 @@ trait HasInertiaInput
         $bindings = array_merge($this->attributesArray(),[
             'classString' => "form-control ".$this->classString(),
             'class' => $this->getWrapperClass(),
-            'options' => method_exists($this,'getOptions') ? $this->getOptions() : []
+            'options' => method_exists($this,'getOptions') ? $this->getOptions() : [],
         ]);
-
 
         return [
             'component' => $this->getComponentName(),

@@ -84,11 +84,13 @@ trait Wrapper
                 }
 
                 if($input->hasCustomBinding()){
+
                     $input->defaultValue($this->bindingData);
                     continue;
                 }
 
                 $input->setValue($this->bindingData[$input->getAttribute('name')] ?? "");
+
             }
         }
     }
@@ -213,7 +215,7 @@ trait Wrapper
                 $inp->fillRelationData($this->model);
             }
 
-            $formInputs[$inp->getName()] = $this->bindingData[$inp->getName()] ?? '';
+            $formInputs[$inp->getName()] = $this->bindingData[$inp->getName()] ?? $inp->getValue();
             $comps[] = $inp->getVueComponentData();
 
         }
