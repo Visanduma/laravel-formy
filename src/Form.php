@@ -3,8 +3,6 @@
 
 namespace Visanduma\LaravelFormy;
 
-
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Visanduma\LaravelFormy\Controllers\FilePondController;
@@ -194,6 +192,7 @@ class Form
                 request()->files->set( $inputName,
                     new \Illuminate\Http\UploadedFile(storage_path("app/".config('formy.media.temp_path')."/".request()->get($inputName)),request()->get($inputName)),
                 );
+
             }
         }
     }

@@ -70,6 +70,7 @@ trait Wrapper
 
     private function bindInputs()
     {
+
         $this->inputCollection = $this->inputs();
         // TODO: improve this data binding
         if($this->bindingData){
@@ -77,7 +78,6 @@ trait Wrapper
             $this->config['submit-btn.text']  = $this->updateButtonText;
 
             foreach ($this->inputCollection as $input) {
-
                 if($input->isFileInput()){
                     $this->bindFiles($input);
                     continue;
@@ -216,9 +216,10 @@ trait Wrapper
             }
 
             $formInputs[$inp->getName()] = $this->bindingData[$inp->getName()] ?? $inp->getValue();
-            $comps[] = $inp->getVueComponentData();
+            $comps[] = $inp->getVueComponentData($this);
 
         }
+
 
         return [
             'components' => $comps,

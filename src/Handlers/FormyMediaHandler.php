@@ -20,6 +20,7 @@ class FormyMediaHandler implements FileManagmentContract
 
             $file = Arr::flatten($request->allFiles())[0]; // proccess single file at once
             $filename = $file->getClientOriginalName()."_".time().".".$file->getClientOriginalExtension();
+            
             $file->storeAs($tempPath,$filename);
 
             return $filename;
@@ -36,6 +37,7 @@ class FormyMediaHandler implements FileManagmentContract
 
     public function delete(Request $request)
     {
+
         if(FormyMedia::find($request->get('file'))){
             $md = FormyMedia::find($request->get('file'));
             // delete file on disk
@@ -43,7 +45,7 @@ class FormyMediaHandler implements FileManagmentContract
 
             $md->delete();
 
-            return response()->json(['message' => 'File removed']);
+            return back();
         }
 
         return response()->json(['message' => 'Unable to remove file'],404);
@@ -51,11 +53,15 @@ class FormyMediaHandler implements FileManagmentContract
 
     public function load($modal)
     {
+        if(!$modal){
+            return [];
+        }
         return $modal->media
             ->map(function($itm){
                 return [
                     'id' => $itm->id,
                     'name' => $itm->original_filename,
+                    'preview' => Storage::disk()->url($itm['path']),
                     'url' => Storage::disk()->url($itm['path']),
                 ];
             });

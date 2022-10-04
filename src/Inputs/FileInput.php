@@ -10,15 +10,32 @@ class FileInput extends BaseInput
 {
     use HasInertiaInput;
 
+    private $savedImages = [];
+
+
     public static function make($label, $name = ""): FileInput
     {
-        return new self($label, $name);
+        $ins = new self($label, $name);
+        $ins->setAttribute('type','file');
+
+
+        return $ins;
     }
 
 
+    public function addFiles(array $files)
+    {
+        $this->savedImages = $files;
+        return $this;
+    }
+
+    public function getSavedImages()
+    {
+            return $this->savedImages;
+    }
+
     public function html($theme)
     {
-        $this->setAttribute('type','file');
 
         return $this->inputView('text-input',$theme);
     }
