@@ -16,31 +16,31 @@ trait HasFormyMedia
         return $this->morphMany(FormyMedia::class,'owner');
     }
 
-    public function saveMediaFilesFromRequest()
+    public function saveMediaFilesFromRequest($disk = null)
     {
         $request = request();
 
         foreach($request->allFiles() as $f){
 
-            $this->storeMediaFile($f,config('formy.media.upload_path','formy-media'));
+            $this->storeMediaFile($f,config('formy.media.upload_path','formy-media'),$disk ?? config('formy.media.disk', 'local'));
 
         }
 
     }
 
-    public function storeMediaFile(UploadedFile $file,$path)
+    public function storeMediaFile(UploadedFile $file,$path, $disk)
     {
 
             $tempFilename = Str::random(20).microtime().".".$file->getClientOriginalExtension();
 
-            $savedPath = $file->storeAs($path,$tempFilename,config('formy.media.disk', 'local'));
+            $savedPath = $file->storeAs($path,$tempFilename,$disk);
 
             $this->media()->create([
                 'original_filename' => $file->getClientOriginalName(),
                 'filename' => $tempFilename,
                 'path' => $savedPath,
                 'mime' => $file->getMimeType(),
-                'disk' => config('formy.media.disk')
+                'disk' => $disk
             ]);
     }
 

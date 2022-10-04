@@ -15,9 +15,10 @@ trait HasInertiaInput
 
         $bindings = array_merge($this->attributesArray(),[
             'classString' => "form-control ".$this->classString(),
+            'wrapperClassString' => 'mb-3',
             'class' => $this->getWrapperClass(),
             'options' => method_exists($this,'getOptions') ? $this->getOptions() : [],
-            'files' => method_exists($this,'getSavedImages') ? $form?->getModel()->mediaArray() : []
+            'files' => method_exists($this,'getSavedImages') ? $form?->getModel()?->mediaArray() : []
         ]);
 
         return [
