@@ -3,9 +3,13 @@
 
 namespace Visanduma\LaravelFormy\Inputs;
 
+use Visanduma\LaravelFormy\Traits\HasInertiaInput;
+
 
 class QuillEditor extends BaseInput
 {
+    use HasInertiaInput;
+
     private $options = [];
 
     public static function make($label, $name = ""): QuillEditor

@@ -27,16 +27,16 @@ export default {
         label: String,
         classString: String,
         errors: Object,
-        files: Object
+        files: [Object, Array]
     },
 
     methods: {
         deleteFile(file) {
-           if(confirm('Delete this file ?')){
+            if (confirm('Delete this file ?')) {
                 this.$inertia.post('/formy/file/delete', {
                     file: file.id
                 })
-           }
+            }
         }
     }
 }

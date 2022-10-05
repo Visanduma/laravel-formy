@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 import Form from "./themes/bootstrap5/FormyForm"
-
+import { VueEditor } from 'vue2-quill-editor'
 
 const Formy = {
   install(Vue, options) {

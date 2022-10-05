@@ -8,7 +8,7 @@
         :placeholder="placeholder"
         :rows="rows"
         @input="$emit('input', $event.target.value)"
-        v-model="value"
+        v-model="content"
     ></textarea>
     <div v-if="errors[name]" class="text-danger">
       {{ errors[name] }}
@@ -33,6 +33,14 @@ export default {
     value: [String, Number],
     rows: Number,
     errors: Object,
+  },
+    mounted() {
+        this.content = this.value
+    },
+  data(){
+    return {
+        content:""
+    }
   }
 }
 </script>
