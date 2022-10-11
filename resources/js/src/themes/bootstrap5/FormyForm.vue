@@ -1,8 +1,15 @@
 <template>
     <div>
         <form action="">
-            <component :is="comp.component" v-for="(comp,k) in builder.components" :key="k"
-                v-model="formData[comp.binding.name]" v-bind="comp.binding" :errors="formData.errors" />
+            <component
+                :is="comp.component"
+                v-for="(comp,k) in builder.components"
+                :key="k"
+                v-model="formData[comp.binding.name]"
+                v-bind="comp.binding"
+                :errors="formData.errors"
+                :token="builder._formToken"
+            />
 
             <div class="mt-3">
                 <button :disabled="formData.processing" class="btn btn-primary" @click.prevent="submit">
@@ -22,13 +29,14 @@ import CheckBoxes from "./inputs/CheckBoxes.vue";
 import FileInput from "./inputs/FileInput.vue";
 import QuillEditor from "./inputs/QuillEditor.vue";
 import RadioInputs from "./inputs/RadioInputs.vue";
+import SearchInput from "./inputs/SearchInput.vue";
 import Select from "./inputs/SelectInput.vue";
 import TextArea from "./inputs/TextArea.vue";
 import TextInput from "./inputs/TextInput.vue";
 
 export default {
     components: {
-        TextInput, TextArea, Select, RadioInputs, CheckBoxes, FileInput, QuillEditor
+        TextInput, TextArea, Select, RadioInputs, CheckBoxes, FileInput, QuillEditor, SearchInput
     },
     props: {
         builder: Object,

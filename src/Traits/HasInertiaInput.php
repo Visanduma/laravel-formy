@@ -18,7 +18,8 @@ trait HasInertiaInput
             'wrapperClassString' => 'mb-3',
             'class' => $this->getWrapperClass(),
             'options' => method_exists($this,'getOptions') ? $this->getOptions() : [],
-            'files' => method_exists($this,'getSavedImages') ? $form?->getModel()?->mediaArray() : []
+            'files' => method_exists($this,'getSavedImages') ? $form?->getModel()?->mediaArray() : [],
+            'configs' => $this->getConfigs()
         ]);
 
         return [
@@ -30,5 +31,10 @@ trait HasInertiaInput
     protected function getComponentName():string
     {
         return class_basename($this);
+    }
+
+    protected function getConfigs():array
+    {
+        return [];
     }
 }

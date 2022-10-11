@@ -220,8 +220,11 @@ trait Wrapper
 
         }
 
+        $class = get_called_class();
+
 
         return [
+            '_formToken' => encrypt($class)."||".Hash::make($class),
             'components' => $comps,
             'url' => $this->getFormSubmitUrl(),
             'inputs' => $formInputs,

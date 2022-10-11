@@ -81,6 +81,17 @@ class Form
         return $nm;
     }
 
+    public function inputsWithKey()
+    {
+        return collect($this->inputs())->mapWithKeys(function($item){
+
+            return [
+                $item->getName() => $item
+            ];
+
+        })->toArray();
+    }
+
     public function updateView()
     {
         $this->bindData($this->setBindingModel());
