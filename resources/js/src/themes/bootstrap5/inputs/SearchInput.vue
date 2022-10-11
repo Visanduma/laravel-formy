@@ -13,8 +13,9 @@
                 </div>
             </div>
             <ul v-if="result.length" class="list-group shadow position-absolute">
-                <li role="button" @click="setValue(o)" v-for="o in result" class="list-group-item" :key="o.id">{{
-                o.title }}</li>
+                <li role="button" @click="setValue(o)" v-for="o in result" class="list-group-item" :key="o.value">
+                {{ o.text }}
+            </li>
             </ul>
         </div>
     </InputWrapper>
@@ -72,8 +73,8 @@ export default {
 
         setValue(item) {
             this.result = []
-            this.selectedValue = item.title
-            this.$emit('input', this.selectedValue)
+            this.selectedValue = item.text
+            this.$emit('input', item.value)
         }
     }
 }

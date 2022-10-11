@@ -42,15 +42,23 @@ class FormController extends Controller
 
     public function searchModel(Request $request)
     {
-    
+
         $query = $request->get('q');
+
         $input = ($this->formClass)->inputsWithKey()[$request->get('input')];
 
-       return $input->searchModel::where($input->search_column,'like', "%$query%")
-            ->select($input->search_column, $input->value_column)
-            ->take($input->results_limit)
-            ->get()
-            ->toArray();
+        if($input->searchFunction){
+            return call_user_func($input->searchFunction,$query)
+                ->map(function($item) use ($input){
+                    return [
+                        'value' => $item[$input->keyColumn],
+                        'text' => $item[$input->valueColumn]
+                    ];
+                })
+                ->toArray();
+        }
+
+        return [];
 
     }
 }

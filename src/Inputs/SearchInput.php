@@ -4,6 +4,7 @@
 namespace Visanduma\LaravelFormy\Inputs;
 
 
+use Closure;
 use Visanduma\LaravelFormy\Traits\HasInertiaInput;
 
 
@@ -11,10 +12,7 @@ class SearchInput extends BaseInput
 {
     use HasInertiaInput;
 
-    public $searchModel,$search_column,$value_column;
-
-    public $results_limit = 3;
-
+    public $searchFunction, $keyColumn, $valueColumn;
 
     public static function make($label, $name = ""): SearchInput
     {
@@ -29,13 +27,13 @@ class SearchInput extends BaseInput
         ]);
     }
 
-    public function search($model, $search_column = 'name', $value_column = 'id')
+    public function query(Closure $closure, $value , $key = 'id')
     {
-            $this->searchModel = $model;
-            $this->search_column = $search_column;
-            $this->value_column = $value_column;
-
-            return $this;
+        $this->keyColumn = $key;
+        $this->valueColumn = $value;
+        $this->searchFunction = $closure;
+        
+        return $this;
     }
 
     public function getConfigs()
