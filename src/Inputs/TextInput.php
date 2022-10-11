@@ -13,7 +13,7 @@ class TextInput extends BaseInput
     public static function make($label, $name = ""): TextInput
     {
         $ins = new self($label, $name);
-        $ins->setAttribute('type','text');
+        $ins->type('text');
 
         return $ins;
     }
