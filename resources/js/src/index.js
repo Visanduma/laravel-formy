@@ -4,6 +4,8 @@ import Form from "./themes/bootstrap5/FormyForm"
 import { VueEditor } from 'vue2-quill-editor'
 
 
+window.axios = require('axios').default
+
 const Formy = {
   install(Vue, options) {
 

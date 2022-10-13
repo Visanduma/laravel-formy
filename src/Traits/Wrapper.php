@@ -5,6 +5,7 @@ namespace Visanduma\LaravelFormy\Traits;
 
 use Illuminate\Support\Facades\Hash;
 use Visanduma\LaravelFormy\Inputs\Button;
+use Visanduma\LaravelFormy\Inputs\Depend;
 
 trait Wrapper
 {
@@ -215,8 +216,10 @@ trait Wrapper
                 $inp->fillRelationData($this->model);
             }
 
-            $formInputs[$inp->getName()] = $this->bindingData[$inp->getName()] ?? $inp->getValue();
-            $comps[] = $inp->getVueComponentData($this);
+                $formInputs[$inp->getName()] = $this->bindingData[$inp->getName()] ?? $inp->getValue();
+                $comps[] = $inp->getVueComponentData($this);
+
+
 
         }
 

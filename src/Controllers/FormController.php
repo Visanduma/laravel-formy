@@ -61,4 +61,18 @@ class FormController extends Controller
         return [];
 
     }
+
+    public function updateDependents(Request  $request)
+    {
+
+        $input = ($this->formClass)->inputsWithKey()[$request->get('input')];
+
+        if($input->dependencyCallback){
+            return call_user_func($input->dependencyCallback, $request->input('value'));
+        }
+
+        return [];
+
+    }
+
 }

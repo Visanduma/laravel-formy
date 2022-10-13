@@ -6,12 +6,12 @@
     <div v-for="(option,k) in options" :key="k" class="form-check">
       <input
           :id=" `formy-radio-${k}` "
-          v-model="value"
+          v-model="selectedValue"
           :class=" [ { 'is-invalid' : isInvalid }, 'form-check-input' ]"
           :name="name"
           :value="k"
           type="radio"
-          @input="$emit('input', $event.target.value)"
+          @input="emitValue($event)"
       >
       <label :for="`formy-radio-${k}`" class="form-check-label">
         {{ option }}
@@ -38,12 +38,51 @@ export default {
     value: [String, Number, Boolean],
     options: [Array, Object],
     errors: Object,
+    depend: String,
   },
+
+    data() {
+        return {
+            selectedValue: null,
+            listValues: null
+        }
+    },
+
+    mounted() {
+        this.$root.$on(this.depend, (payload => {
+            this.updateDepended(payload)
+        }))
+        this.selectedValue = this.props.value
+    },
+
+methods: {
+
+    emitValue(event) {
+        this.$emit('input', event.target.value)
+        this.$root.$emit(this.name, event.target.value)
+    },
+
+    updateDepended(payload) {
+        axios.post('/formy/update-dependents', {
+            input: this.name,
+            value: payload,
+            _form: this.token.split('||')[0]
+        })
+            .then(res => {
+                this.listValues = res.data
+                this.selectedValue = null
+            })
+    }
+},
 
   computed: {
     isInvalid() {
       return this.errors[this.name]
     },
+
+      optionsList() {
+          return this.listValues ?? this.options
+      }
   }
 }
 </script>

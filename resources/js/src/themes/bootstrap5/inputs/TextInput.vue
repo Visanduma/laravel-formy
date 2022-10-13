@@ -34,6 +34,10 @@ export default {
     value: [String, Number],
     autocomplete: String,
     errors: Object,
+  },
+
+  mounted(){
+        
   }
 }
 </script>

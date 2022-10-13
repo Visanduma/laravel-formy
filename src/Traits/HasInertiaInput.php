@@ -19,7 +19,8 @@ trait HasInertiaInput
             'class' => $this->getWrapperClass(),
             'options' => method_exists($this,'getOptions') ? $this->getOptions() : [],
             'files' => method_exists($this,'getSavedImages') ? $form?->getModel()?->mediaArray() : [],
-            'configs' => $this->getConfigs()
+            'configs' => $this->getConfigs(),
+            
         ]);
 
         return [

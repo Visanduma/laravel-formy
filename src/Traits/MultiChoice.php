@@ -4,6 +4,7 @@
 namespace Visanduma\LaravelFormy\Traits;
 
 
+use Closure;
 use Illuminate\Support\Arr;
 
 trait MultiChoice
@@ -41,4 +42,6 @@ trait MultiChoice
 
         return in_array($value, $this->selectedValues);
     }
+
+    
 }

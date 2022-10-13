@@ -1,7 +1,7 @@
 <template>
     <InputWrapper :class="wrapperClassString">
         <label v-text="label"></label>
-        <input :class="[{ 'is-invalid': errors[name]}, classString]" :name="name" :placeholder="placeholder"
+        <input :class="[{ 'is-invalid': errors[name]}, classString]" :name="name" :placeholder="placeholder" autocomplete="off"
             v-model="selectedValue" @input="$emit('input', selectedValue)" @keyup="callApi()">
         <div v-if="errors[name]" class="text-danger">
             {{ errors[name] }}
@@ -50,15 +50,21 @@ export default {
         }
     },
 
+    mounted(){
+        // this.$root.$on('city', (payload => {
+        //     this.callApi(payload)
+        // }))
+    },
+
     methods: {
-        callApi() {
+        callApi(query = this.selectedValue) {
 
             if (this.timeout)
                 clearTimeout(this.timeout)
 
             this.timeout = setTimeout(() => {
                 this.loading = true
-                fetch(this.configs.searchUrl + `&q=${this.selectedValue}&_form=${this.token.split('||')[0]}`)
+                fetch(this.configs.searchUrl + `&q=${query}&_form=${this.token.split('||')[0]}`)
                     .then((res) => res.json())
                     .then(data => {
                         this.result = data
@@ -75,6 +81,7 @@ export default {
             this.result = []
             this.selectedValue = item.text
             this.$emit('input', item.value)
+            this.$root.$emit('number', item.value)
         }
     }
 }
