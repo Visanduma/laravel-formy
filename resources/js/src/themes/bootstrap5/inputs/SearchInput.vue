@@ -37,7 +37,7 @@ export default {
         placeholder: { type: String, default: "" },
         errors: Object,
         configs: [Array, Object],
-        token: String
+        token: String,
     },
 
     data() {
@@ -51,9 +51,7 @@ export default {
     },
 
     mounted(){
-        // this.$root.$on('city', (payload => {
-        //     this.callApi(payload)
-        // }))
+        //
     },
 
     methods: {
@@ -81,7 +79,7 @@ export default {
             this.result = []
             this.selectedValue = item.text
             this.$emit('input', item.value)
-            this.$root.$emit('number', item.value)
+            this.$root.$emit(this.name, item.value)
         }
     }
 }
