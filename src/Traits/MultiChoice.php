@@ -12,8 +12,13 @@ trait MultiChoice
     protected array $options = [];
     private array $selectedValues = [];
 
-    public function options($values)
+    public function options(Array|Closure $values)
     {
+        if(is_callable($values)){
+            $this->options = call_user_func($values);
+            return $this;
+        }
+        
         $this->options = $values;
         return $this;
     }
@@ -43,5 +48,5 @@ trait MultiChoice
         return in_array($value, $this->selectedValues);
     }
 
-    
+
 }
