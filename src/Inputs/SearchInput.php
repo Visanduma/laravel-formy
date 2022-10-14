@@ -16,7 +16,9 @@ class SearchInput extends BaseInput
 
     public static function make($label, $name = ""): SearchInput
     {
-        return new self($label, $name);
+        $ins = new self($label, $name);
+        $ins->setConfig('searchUrl', route('formy.search-model',['input' => $ins->getName()]));
+        return $ins;
     }
 
     public function html($theme,$model)
@@ -32,16 +34,8 @@ class SearchInput extends BaseInput
         $this->keyColumn = $key;
         $this->valueColumn = $value;
         $this->searchFunction = $closure;
-        
+
         return $this;
     }
-
-    public function getConfigs()
-    {
-        return [
-            'searchUrl' => route('formy.search-model',['input' => $this->getName()]),
-        ];
-    }
-
 
 }

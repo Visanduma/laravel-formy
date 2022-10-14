@@ -11,20 +11,23 @@
                 {{ option }}
             </label>
         </div>
+
+        <AddMore v-show="configs.creatable" :token="token" :input="name" @created="refreshInput()"></AddMore>
         <div v-if="isInvalid" class="text-danger">
             {{ errors[name] }}
         </div>
-
     </InputWrapper>
 </template>
 
 <script>
 
-import InputWrapper from "../InputWrapper";
+import InputWrapper from "../InputWrapper"
+import AddMore from "../inputs/AddMore"
+
 
 
 export default {
-    components: { InputWrapper },
+    components: { InputWrapper , AddMore},
     props: {
         name: String,
         label: String,
@@ -33,13 +36,15 @@ export default {
         options: [Array, Object],
         errors: Object,
         depend: String,
-        token: String
+        token: String,
+        configs: [Object]
     },
 
     data() {
         return {
             selectedValue: null,
-            listValues: null
+            listValues: null,
+            content: ""
         }
     },
 
@@ -59,15 +64,26 @@ export default {
             this.$root.$emit(this.name, event.target.value)
         },
 
-        updateDepended(payload) {
+        updateDepended(payload = null, type = null) {
             axios.post('/formy/update-dependents', {
                 input: this.name,
                 value: payload,
+                type: type,
                 _form: this.token.split('||')[0]
             })
                 .then(res => {
                     this.listValues = res.data
                     this.selectedValue = null
+                })
+        },
+
+        refreshInput() {
+            axios.post('/formy/refresh-input', {
+                _form: this.token.split('||')[0],
+                input: this.name
+            })
+                .then(res => {
+                    this.listValues = res.data.binding.options
                 })
         }
     },

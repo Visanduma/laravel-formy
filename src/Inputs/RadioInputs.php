@@ -1,15 +1,19 @@
 <?php
 
-
 namespace Visanduma\LaravelFormy\Inputs;
 
+use Closure;
+use Visanduma\LaravelFormy\Traits\AddMore;
 use Visanduma\LaravelFormy\Traits\HasDependence;
 use Visanduma\LaravelFormy\Traits\HasInertiaInput;
 use Visanduma\LaravelFormy\Traits\MultiChoice;
 
 class RadioInputs extends BaseInput
 {
-    use MultiChoice, HasInertiaInput, HasDependence;
+    use MultiChoice;
+    use HasInertiaInput;
+    use HasDependence;
+    use AddMore;
 
 
     public static function make($label, $name = ""): RadioInputs
@@ -21,7 +25,7 @@ class RadioInputs extends BaseInput
     {
         return $this->inputView('radio-input', $theme, [
             'disabled' => $this->disabled,
-            'options' => $this->options
+            'options' => $this->options,
         ]);
     }
 

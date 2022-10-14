@@ -13,6 +13,8 @@ Route::group([],function(){
 
     Route::post('formy/create-resource',[\Visanduma\LaravelFormy\Controllers\FormController::class,'createResource']);
 
+    Route::post('formy/refresh-input',[\Visanduma\LaravelFormy\Controllers\FormController::class,'refreshInput']);
+
 });
 
 

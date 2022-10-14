@@ -63,9 +63,11 @@ class FormController extends Controller
     public function updateDependents(Request  $request)
     {
         $input = ($this->formClass)->inputsWithKey()[$request->get('input')];
+        $type = $request->input('type','dependencyCallback');
 
-        if ($input->dependencyCallback) {
-            return call_user_func($input->dependencyCallback, $request->input('value'));
+
+        if ($input->$type) {
+            return call_user_func($input->$type, $request->input('value'));
         }
 
         return [];
@@ -84,5 +86,14 @@ class FormController extends Controller
         }
 
         return [];
+    }
+
+    public function refreshInput(Request $request)
+    {
+
+        $input = ($this->formClass)->inputsWithKey()[$request->get('input')];
+
+        return $input->getVueComponentData();
+
     }
 }
