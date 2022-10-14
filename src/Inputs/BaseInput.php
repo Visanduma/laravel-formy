@@ -50,7 +50,13 @@ abstract class BaseInput
 
     public function defaultValue($data)
     {
-        $this->setValue(call_user_func($this->updateCallback, $data));
+        if($this->updateCallback){
+
+            $this->setValue(call_user_func($this->updateCallback, $data));
+        }else{
+            $this->setValue($data);
+        }
+
         return $this;
     }
 

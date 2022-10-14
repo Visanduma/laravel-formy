@@ -20,7 +20,8 @@ trait HasInertiaInput
             'options' => method_exists($this,'getOptions') ? $this->getOptions() : [],
             'files' => method_exists($this,'getSavedImages') ? $form?->getModel()?->mediaArray() : [],
             'configs' => $this->getConfigs(),
-            
+            'value' => $this->getValue(),
+
         ]);
 
         return [

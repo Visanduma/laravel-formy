@@ -25,7 +25,6 @@
 
 import InputWrapper from "../InputWrapper";
 
-
 export default {
 
     components: { InputWrapper },
@@ -62,14 +61,19 @@ export default {
 
             this.timeout = setTimeout(() => {
                 this.loading = true
-                fetch(this.configs.searchUrl + `&q=${query}&_form=${this.token.split('||')[0]}`)
-                    .then((res) => res.json())
-                    .then(data => {
-                        this.result = data
-                    })
+                axios.get(this.configs.searchUrl,{
+                    params: {
+                        q: query,
+                        _form: this.token.split('||')[0]
+                    }
+                })
+                .then(res=>{
+                    this.result = res.data
+                })
                     .finally(() => {
                         this.loading = false
                     })
+
             }, 800);
 
 
@@ -90,5 +94,8 @@ div.suggesstions {
     height: 50px;
     padding: 12px;
     border-radius: 0 0 12px 12px;
+}
+ul.list-group{
+    z-index: 99999;
 }
 </style>

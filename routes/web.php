@@ -11,6 +11,8 @@ Route::group([],function(){
 
     Route::post('formy/update-dependents',[\Visanduma\LaravelFormy\Controllers\FormController::class,'updateDependents']);
 
+    Route::post('formy/create-resource',[\Visanduma\LaravelFormy\Controllers\FormController::class,'createResource']);
+
 });
 
 

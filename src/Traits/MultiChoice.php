@@ -18,7 +18,7 @@ trait MultiChoice
             $this->options = call_user_func($values);
             return $this;
         }
-        
+
         $this->options = $values;
         return $this;
     }

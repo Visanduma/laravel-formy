@@ -42,37 +42,47 @@ class FormController extends Controller
 
     public function searchModel(Request $request)
     {
-
         $query = $request->get('q');
 
         $input = ($this->formClass)->inputsWithKey()[$request->get('input')];
 
-        if($input->searchFunction){
-            return call_user_func($input->searchFunction,$query)
-                ->map(function($item) use ($input){
+        if ($input->searchFunction) {
+            return call_user_func($input->searchFunction, $query)
+                ->map(function ($item) use ($input) {
                     return [
                         'value' => $item[$input->keyColumn],
-                        'text' => $item[$input->valueColumn]
+                        'text' => $item[$input->valueColumn],
                     ];
                 })
                 ->toArray();
         }
 
         return [];
-
     }
 
     public function updateDependents(Request  $request)
     {
-
         $input = ($this->formClass)->inputsWithKey()[$request->get('input')];
 
-        if($input->dependencyCallback){
+        if ($input->dependencyCallback) {
             return call_user_func($input->dependencyCallback, $request->input('value'));
         }
 
         return [];
-
     }
 
+    public function createResource(Request $request)
+    {
+        $request->validate([
+            'content' => 'required'
+        ]);
+
+        $input = ($this->formClass)->inputsWithKey()[$request->get('input')];
+
+        if ($input->createCallback) {
+            return call_user_func($input->createCallback, $request->input('content'));
+        }
+
+        return [];
+    }
 }

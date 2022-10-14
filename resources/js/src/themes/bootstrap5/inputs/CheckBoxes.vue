@@ -12,7 +12,6 @@
         <div v-if="isInvalid" class="text-danger">
             {{ errors[name] }}
         </div>
-
     </InputWrapper>
 </template>
 
@@ -39,7 +38,7 @@ export default {
     },
 
     mounted() {
-        this.selected = this.props.value
+        //this.selected = this.value
     },
 
     computed: {

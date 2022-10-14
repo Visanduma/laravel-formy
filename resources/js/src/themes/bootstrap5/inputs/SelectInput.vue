@@ -3,7 +3,7 @@
         <label v-text="label"></label>
         <select :class="[{ 'is-invalid': errors[name]}, classString]" :name="name" @input="emitValue($event)"
             v-model="selectedValue">
-            <option :value="null" disabled>Select</option>
+            <option value disabled>Select</option>
             <option v-for="(option,k) in optionsList" :key="k" :selected=" k === value " :value="k">{{ option }}
             </option>
 
@@ -24,10 +24,7 @@ export default {
         name: String,
         label: String,
         classString: String,
-        value: {
-            type: [String, Number],
-            default: null
-        },
+        value: null,
         options: [Array, Object],
         errors: Object,
         depend: String,
@@ -42,10 +39,12 @@ export default {
     },
 
     mounted() {
+        this.selectedValue = this.value
+
         this.$root.$on(this.depend, (payload => {
             this.updateDepended(payload)
         }))
-        this.selectedValue = this.props.value
+
     },
 
     methods: {
@@ -62,7 +61,7 @@ export default {
             })
                 .then(res => {
                     this.listValues = res.data
-                    this.selectedValue = null
+                    this.selectedValue = ""
 
                 })
         }

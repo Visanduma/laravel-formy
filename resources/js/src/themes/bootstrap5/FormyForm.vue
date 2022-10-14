@@ -33,10 +33,11 @@ import SearchInput from "./inputs/SearchInput.vue";
 import Select from "./inputs/SelectInput.vue";
 import TextArea from "./inputs/TextArea.vue";
 import TextInput from "./inputs/TextInput.vue";
+import RecordCreator from "./inputs/RecordCreator.vue";
 
 export default {
     components: {
-        TextInput, TextArea, Select, RadioInputs, CheckBoxes, FileInput, QuillEditor, SearchInput
+        TextInput, TextArea, Select, RadioInputs, CheckBoxes, FileInput, QuillEditor, SearchInput, RecordCreator
     },
     props: {
         builder: Object,
