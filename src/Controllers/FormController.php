@@ -13,13 +13,18 @@ class FormController extends Controller
 
     public function __construct()
     {
-        $this->className = decrypt(request()->get('_form'));
-        $this->formClass = new $this->className();
+        
+        if (! app()->runningInConsole()) {
+            
+            $this->className = decrypt(request()->get('_form'));
+            $this->formClass = new $this->className();
 
-        // apply middlewares
-        $excluded = array_diff(config('formy.middlewares'), $this->formClass->withoutFormMiddlewares());
+            // apply middlewares
+            $excluded = array_diff(config('formy.middlewares'), $this->formClass->withoutFormMiddlewares());
 
-        $this->middleware(array_merge($excluded, $this->formClass->formMiddlewares()));
+            $this->middleware(array_merge($excluded, $this->formClass->formMiddlewares()));
+
+        }
     }
 
     public function handleSubmit(Request $request)
