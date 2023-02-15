@@ -74,37 +74,35 @@ trait Wrapper
 
         $this->inputCollection = $this->inputs();
         // TODO: improve this data binding
-        if($this->bindingData){
+        if ($this->bindingData) {
 
             $this->config['submit-btn.text']  = $this->updateButtonText;
 
             foreach ($this->inputCollection as $input) {
-                if($input->isFileInput()){
+                if ($input->isFileInput()) {
                     $this->bindFiles($input);
                     continue;
                 }
 
-                if($input->hasCustomBinding()){
+                if ($input->hasCustomBinding()) {
 
                     $input->defaultValue($this->bindingData);
                     continue;
                 }
 
                 $input->setValue($this->bindingData[$input->getAttribute('name')] ?? "");
-
             }
         }
     }
 
     private function bindFiles($input)
     {
-        $input->setFilesList(function(){
+        $input->setFilesList(function () {
             $handler = new (config('formy.media.handler'));
 
-            if($this->isUpdateForm()){
+            if ($this->isUpdateForm()) {
                 return $handler->load($this->getModel());
             }
-
         });
     }
 
@@ -116,12 +114,10 @@ trait Wrapper
 
     protected function beforeBinding()
     {
-
     }
 
     protected function afterBinding()
     {
-
     }
 
     private function compileHtml()
@@ -129,29 +125,28 @@ trait Wrapper
         $html = "";
 
         $totalCols = 0;
-        foreach ($this->inputCollection as $key=>$input) {
+        foreach ($this->inputCollection as $key => $input) {
 
             $col = $input->getLayoutColumn();
             $row_prefix = "";
             $row_suffix = "";
 
             // row managment
-            if($totalCols == 0){
+            if ($totalCols == 0) {
                 $row_prefix = "<div class='row'>";
             }
 
             $totalCols += $col;
 
-            if($totalCols == 12 || $input->onSingleLine() || $key + 1 == count($this->inputCollection)){
+            if ($totalCols == 12 || $input->onSingleLine() || $key + 1 == count($this->inputCollection)) {
                 $row_suffix = "</div>";
                 $totalCols = 0;
             }
 
 
-            if($this->isUpdate && $input->isVisibleOnUpdate() ||  !$this->isUpdate){
-                $html .= $row_prefix.$input->html($this->theme,$this->model).$row_suffix;
+            if ($this->isUpdate && $input->isVisibleOnUpdate() ||  !$this->isUpdate) {
+                $html .= $row_prefix . $input->html($this->theme, $this->model) . $row_suffix;
             }
-
         }
 
         return $html;
@@ -162,18 +157,18 @@ trait Wrapper
         $buttons = [
             Button::make('Submit')
                 ->addClass('btn btn-primary')
-                ->setAttribute('@click','submit')
-                ->setAttribute(':disabled','form.processing')
-                ->setAttribute('hasSpinner',true)
+                ->setAttribute('@click', 'submit')
+                ->setAttribute(':disabled', 'form.processing')
+                ->setAttribute('hasSpinner', true)
                 ->html($this->theme),
 
             Button::make('Reset')
                 ->addClass('btn btn-light')
-                ->setAttribute('@click','reset')
+                ->setAttribute('@click', 'reset')
                 ->html($this->theme),
         ];
 
-        return implode("",$buttons);
+        return implode("", $buttons);
     }
 
     private function getFormSubmitUrl()
@@ -183,7 +178,7 @@ trait Wrapper
         return  route('formy.form-submit', [
             '_form' => encrypt($class),
             '_hash' => Hash::make($class),
-            '_model' => optional($this->getModel())->getKey() ?? null
+            // '_model' => optional($this->getModel())->getKey() ?? null
         ]);
     }
 
@@ -195,7 +190,7 @@ trait Wrapper
 
         $this->afterBinding();
 
-        $this->setAttribute('action',$this->getFormSubmitUrl());
+        $this->setAttribute('action', $this->getFormSubmitUrl());
 
         $html = $this->compileHtml();
 
@@ -205,34 +200,29 @@ trait Wrapper
             ->render();
     }
 
+    public function bindingData()
+    {
+        return [];
+    }
+
     public function toInertia()
     {
-        $comps = [];
         $formInputs = [];
+        $currentData = $this->bindingData();
 
-        foreach ($this->inputs() as $inp){
-
-            if($inp->relation ?? null){
-                $inp->fillRelationData($this->model);
-            }
-
-                $formInputs[$inp->getName()] = $this->bindingData[$inp->getName()] ?? $inp->getValue();
-                $comps[] = $inp->getVueComponentData($this);
-
-
-
+        foreach ($this->inputs() as $key => $inp) {
+            $formInputs[$key] = array_key_exists($key, $currentData) ? $currentData[$key] : null;
         }
 
         $class = get_called_class();
 
 
         return [
-            '_formToken' => encrypt($class)."||".Hash::make($class),
-            'components' => $comps,
+            '_formToken' => encrypt($class) . "||" . Hash::make($class),
             'url' => $this->getFormSubmitUrl(),
             'inputs' => $formInputs,
-            'isUpdateForm' => $this->isUpdateForm()
+            'isUpdateForm' => $this->isUpdateForm(),
+            'data' => $this->getData()
         ];
     }
-
 }

@@ -1,7 +1,7 @@
 <?php
 
 Route::group([],function(){
-    Route::post('formy/submit', [\Visanduma\LaravelFormy\Controllers\FormController::class,'handleSubmit'])->name('formy.form-submit');
+    Route::match(['post','patch'],'formy/submit', [\Visanduma\LaravelFormy\Controllers\FormController::class,'handleSubmit'])->name('formy.form-submit');
 
     Route::post('formy/file/delete', [\Visanduma\LaravelFormy\Controllers\FilePondController::class,'handleDelete'])->name('formy.delete-file');
 

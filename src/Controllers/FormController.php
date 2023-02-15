@@ -36,9 +36,9 @@ class FormController extends Controller
         }
 
         // inject uploaded files if any
-        $this->formClass->injectFiles();
+        //$this->formClass->injectFiles();
 
-        if ($request->get('_model')) {
+        if ($request->isMethod('patch')) {
             return $this->formClass->update($request);
         }
 

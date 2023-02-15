@@ -43,19 +43,18 @@ class Form
         $this->config['submit-btn.disabled']  = $this->disableSubmitButton;
 
         $this->setup();
-
     }
 
-    public static function updateForm($model)
+    public static function updateForm()
     {
         // TODO: improve model detection
         $ins = new static();
 
-        if($model instanceof Model){
-            $ins->modelKey = $model->getKey();
-        }else{
-            $ins->modelKey = $model;
-        }
+        // if ($model instanceof Model) {
+        //     $ins->modelKey = $model->getKey();
+        // } else {
+        //     $ins->modelKey = $model;
+        // }
 
         return $ins->updateView();
     }
@@ -66,29 +65,28 @@ class Form
     }
 
 
-    protected function inputs()
+    public function inputs(): array
     {
         return [];
     }
 
-    public function inputsNames()
-    {
-        $nm = [];
-        foreach ($this->inputs() as $inp) {
-            $nm[] = $inp->getAttribute('name');
-        }
+    // public function inputsNames()
+    // {
+    //     $nm = [];
+    //     foreach ($this->inputs() as $inp) {
+    //         $nm[] = $inp->getAttribute('name');
+    //     }
 
-        return $nm;
-    }
+    //     return $nm;
+    // }
 
     public function inputsWithKey()
     {
-        return collect($this->inputs())->mapWithKeys(function($item){
+        return collect($this->inputs())->mapWithKeys(function ($item) {
 
             return [
                 $item->getName() => $item
             ];
-
         })->toArray();
     }
 
@@ -104,25 +102,23 @@ class Form
 
     protected function setBindingModel()
     {
-        return $this->getModel();
+        // return $this->getModel();
     }
 
     public function getModel()
     {
-        if(request()->isMethod('post')){
+        if (request()->isMethod('post')) {
             $key = request()->get('_model');
-        }else{
+        } else {
             $key = $this->modelKey;
         }
 
-        if($this->model::exists($key)){
+        if ($this->model::exists($key)) {
             return $this->model::find($key);
         }
 
 
         return $this->model;
-
-
     }
 
     public function getValidationRules(): array
@@ -146,14 +142,14 @@ class Form
         return array_filter($rr);
     }
 
-    public function validate()
+    public function validateInputs()
     {
-        request()->validate($this->getValidationRules(),[],$this->getValidationAttributeLabels());
+        request()->validate($this->inputs());
     }
 
     public function hasValidInputs()
     {
-        $vd = validator(request()->all(),$this->getValidationRules(),[],$this->getValidationAttributeLabels());
+        $vd = validator(request()->all(), $this->getValidationRules(), [], $this->getValidationAttributeLabels());
         $this->validationMessages = $vd->errors()->messages();
         return !$vd->fails();
     }
@@ -171,7 +167,7 @@ class Form
 
     public function getData($key = null)
     {
-        if($key && array_key_exists($key,$this->customData)){
+        if ($key && array_key_exists($key, $this->customData)) {
             return $this->customData[$key];
         }
 
@@ -182,51 +178,50 @@ class Form
     {
         $inputs = request()->only($this->inputsNames());
 
-        return $this->getModel()->update(array_diff($inputs,$except));
+        return $this->getModel()->update(array_diff($inputs, $except));
     }
 
     public function createEntity($except = [])
     {
         $inputs = request()->only($this->inputsNames());
 
-        return $this->model::create(array_diff($inputs,$except));
+        return $this->model::create(array_diff($inputs, $except));
     }
 
     public function injectFiles()
     {
 
-        foreach ($this->inputs() as $input){
+        foreach ($this->inputs() as $input) {
             $inputName = $input->getAttribute('name');
 
-            if($input->isFileInput() && request()->get($inputName)){
+            if ($input->isFileInput() && request()->get($inputName)) {
 
-                request()->files->set( $inputName,
-                    new \Illuminate\Http\UploadedFile(storage_path("app/".config('formy.media.temp_path')."/".request()->get($inputName)),request()->get($inputName)),
+                request()->files->set(
+                    $inputName,
+                    new \Illuminate\Http\UploadedFile(storage_path("app/" . config('formy.media.temp_path') . "/" . request()->get($inputName)), request()->get($inputName)),
                 );
-
             }
         }
     }
 
     public function uploadFiles()
     {
-
     }
 
     /**
      * Setup form configuration before build it
      */
-    protected function setup():void
+    protected function setup(): void
     {
         // setup form
     }
 
-    public function isUpdateForm():bool
+    public function isUpdateForm(): bool
     {
         return $this->isUpdate;
     }
 
-    public function isCreateForm():bool
+    public function isCreateForm(): bool
     {
         return !$this->isUpdate;
     }
@@ -234,20 +229,18 @@ class Form
     /**
      *  Disable form submit button
      */
-    public function disableFormSubmit():void
+    public function disableFormSubmit(): void
     {
         $this->config['submit-btn.disabled']  = true;
-
     }
 
-    public function formMiddlewares():array
+    public function formMiddlewares(): array
     {
         return $this->middlewares;
     }
 
-    public function withoutFormMiddlewares():array
+    public function withoutFormMiddlewares(): array
     {
         return $this->withoutMiddlewares;
     }
-
 }
