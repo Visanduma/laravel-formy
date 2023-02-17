@@ -235,7 +235,7 @@ trait Wrapper
             '_formToken' => encrypt($class) . "||" . Hash::make($class),
             'url' => $this->getFormSubmitUrl(),
             'inputs' => $formInputs,
-            'isUpdateForm' => $this->isUpdateForm(),
+            'isUpdateForm' => $this->isUpdate,
             'data' => $this->getData()
         ];
     }

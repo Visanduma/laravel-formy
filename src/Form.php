@@ -49,6 +49,7 @@ class Form
     {
         // TODO: improve model detection
         $ins = new static();
+        $ins->isUpdate = true;
 
         // if ($model instanceof Model) {
         //     $ins->modelKey = $model->getKey();
@@ -85,8 +86,8 @@ class Form
     {
         $this->bindData($this->setBindingModel());
         $this->isUpdate = true;
-        $this->config['submit-btn.text']  = $this->updateButtonText;
-        $this->config['reset-btn.disabled']  = true;
+        // $this->config['submit-btn.text']  = $this->updateButtonText;
+        // $this->config['reset-btn.disabled']  = true;
 
         return $this;
     }
@@ -136,6 +137,12 @@ class Form
     public function validateInputs()
     {
         request()->validate($this->inputs());
+    }
+
+    public function validateInputsExcept(...$names)
+    {
+        $diff = array_diff_key($this->inputs(), array_fill_keys($names, ''));
+        request()->validate($diff);
     }
 
     public function hasValidInputs()
@@ -209,7 +216,7 @@ class Form
 
     public function isUpdateForm(): bool
     {
-        return $this->isUpdate;
+        return request()->isMethod('PATCH');
     }
 
     public function isCreateForm(): bool
