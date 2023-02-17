@@ -70,15 +70,6 @@ class Form
         return [];
     }
 
-    // public function inputsNames()
-    // {
-    //     $nm = [];
-    //     foreach ($this->inputs() as $inp) {
-    //         $nm[] = $inp->getAttribute('name');
-    //     }
-
-    //     return $nm;
-    // }
 
     public function inputsWithKey()
     {

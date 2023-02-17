@@ -12,8 +12,10 @@ trait Wrapper
     private array $attributes = [];
     private array $classes = [];
     private $bindingData = [];
+    private $bindingParams;
     private bool $isUpdate = false;
     private array $inputCollection = [];
+    private array $defaults = [];
 
 
     private function setAttribute($name, $value)
@@ -66,6 +68,12 @@ trait Wrapper
     public function bindData($data)
     {
         $this->bindingData = $data;
+        return $this;
+    }
+
+    public function using($data)
+    {
+        $this->bindingParams = $data;
         return $this;
     }
 
@@ -200,15 +208,21 @@ trait Wrapper
             ->render();
     }
 
-    public function bindingData()
+    public function bindingData($data = null)
     {
         return [];
+    }
+
+    public function withDefaults($array)
+    {
+        $this->defaults = $array;
+        return $this;
     }
 
     public function toInertia()
     {
         $formInputs = [];
-        $currentData = $this->bindingData();
+        $currentData = array_merge($this->bindingData($this->bindingParams), $this->defaults);
 
         foreach ($this->inputs() as $key => $inp) {
             $formInputs[$key] = array_key_exists($key, $currentData) ? $currentData[$key] : null;
